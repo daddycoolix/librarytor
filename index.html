@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1B4D33">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Librarytor">
+<meta name="description" content="Librarytor - הפרויקט הארצי לספריות קהילתיות ברחוב">
+<title>Librarytor</title>
+<!-- v2.0 - 440 real libraries -->
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --primary:#2E7D52;--primary-light:#E8F5EE;--primary-dark:#1B4D33;
+  --accent:#D4A843;--bg:#F7F5F0;--surface:#FFFFFF;
+  --text:#1A1A1A;--text-muted:#6B6B6B;--border:rgba(0,0,0,0.10);
+  --radius:14px;--radius-sm:8px;--shadow:0 2px 12px rgba(0,0,0,0.08);
+}
+html,body{height:100%;overflow:hidden;background:#1B4D33;}
+body{font-family:'Heebo',sans-serif;direction:rtl;color:var(--text);}
+.app{max-width:430px;margin:0 auto;background:var(--surface);height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+.status-bar{background:var(--primary-dark);color:white;display:flex;justify-content:space-between;align-items:center;padding:env(safe-area-inset-top,8px) 16px 6px;font-size:11px;min-height:28px;}
+.top-bar{background:var(--primary);color:white;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.app-logo{width:34px;height:34px;background:rgba(255,255,255,0.2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.top-bar-title{flex:1;}
+.top-bar-title h1{font-size:16px;font-weight:700;letter-spacing:-0.3px;}
+.top-bar-title p{font-size:10px;opacity:0.7;margin-top:1px;}
+.gps-badge{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 10px;font-size:10px;display:flex;align-items:center;gap:5px;cursor:pointer;flex-shrink:0;}
+.gps-dot{width:6px;height:6px;border-radius:50%;background:#9ca3af;transition:background 0.3s;}
+.gps-dot.active{background:#4ade80;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.screens{flex:1;overflow:hidden;position:relative;}
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:none;-webkit-overflow-scrolling:touch;background:var(--bg);}
+.screen.active{display:block;}
+
+/* MAP SCREEN */
+.map-frame{width:100%;height:240px;border:none;flex-shrink:0;background:#d8ecd8;}
+.map-overlay{position:relative;background:var(--primary-dark);color:white;padding:7px 14px;font-size:11px;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.section-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px 8px;background:var(--surface);border-bottom:1px solid var(--border);}
+.section-title{font-size:13px;font-weight:700;}
+.section-pill{font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 10px;border-radius:10px;font-weight:600;}
+.search-wrap{padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);}
+.search-row{display:flex;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:7px 14px;}
+.search-row input{flex:1;border:none;outline:none;font-size:13px;background:transparent;direction:rtl;font-family:'Heebo',sans-serif;}
+.lib-cards{display:flex;flex-direction:column;gap:8px;padding:10px 14px 100px;}
+.lib-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;cursor:pointer;position:relative;overflow:hidden;transition:box-shadow 0.15s;}
+.lib-card:active{box-shadow:0 0 0 2px var(--primary);}
+.lib-card-accent{position:absolute;right:0;top:0;bottom:0;width:4px;background:var(--primary);opacity:0;}
+.lib-card.has-photo .lib-card-accent{opacity:1;}
+.lib-card-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.lib-photo-thumb{width:42px;height:42px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--primary-light);}
+.lib-icon-wrap{width:42px;height:42px;background:var(--primary-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.lib-info{flex:1;min-width:0;}
+.lib-name{font-size:13px;font-weight:700;line-height:1.3;}
+.lib-addr{font-size:11px;color:var(--text-muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lib-dist{font-size:12px;color:var(--primary);font-weight:700;flex-shrink:0;}
+.lib-badges{display:flex;gap:6px;flex-wrap:wrap;}
+.badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;}
+.b-green{background:#E8F5EE;color:#2E7D52;}
+.b-yellow{background:#FEF3C7;color:#92400E;}
+.b-blue{background:#EFF6FF;color:#1D4ED8;}
+.b-gray{background:#F3F4F6;color:#4B5563;}
+.lib-desc{font-size:11px;color:var(--text-muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--border);line-height:1.5;}
+
+/* DETAIL SCREEN */
+.detail-hero{background:var(--primary);color:white;padding:0;}
+.back-row{display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;background:rgba(0,0,0,0.15);}
+.back-row span{font-size:13px;opacity:0.9;}
+.detail-photos{display:block;padding:0 0 6px;overflow:hidden;}
+.detail-photos-scroll{display:flex;gap:6px;overflow-x:auto;padding:6px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.detail-photos-scroll::-webkit-scrollbar{display:none;}
+.detail-photos::-webkit-scrollbar{display:none;}
+.detail-photo{width:120px;height:90px;border-radius:10px;object-fit:cover;flex-shrink:0;}
+.detail-info-box{padding:12px 14px;}
+.detail-name{font-size:18px;font-weight:700;line-height:1.3;margin-bottom:4px;}
+.detail-addr{font-size:12px;opacity:0.8;}
+.detail-coord{font-size:10px;opacity:0.55;margin-top:3px;font-family:monospace;}
+.detail-desc-box{background:rgba(0,0,0,0.15);border-radius:8px;padding:8px 12px;margin-top:8px;font-size:12px;opacity:0.9;line-height:1.6;}
+.detail-btns{display:flex;gap:8px;margin-top:10px;}
+.detail-btn{flex:1;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:9px;font-size:12px;font-weight:600;color:white;cursor:pointer;font-family:'Heebo',sans-serif;text-align:center;}
+.detail-btn:active{background:rgba(255,255,255,0.3);}
+.detail-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(0,0,0,0.2);margin-top:10px;}
+.stat-cell{background:rgba(0,0,0,0.12);padding:10px;text-align:center;}
+.stat-n{font-size:22px;font-weight:700;}
+.stat-l{font-size:10px;opacity:0.65;margin-top:1px;}
+.books-toolbar{display:flex;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:5;}
+.search-box{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-size:13px;direction:rtl;outline:none;font-family:'Heebo',sans-serif;}
+.search-box:focus{border-color:var(--primary);}
+.filter-chip{padding:7px 12px;background:var(--surface);border:1px solid var(--border);border-radius:20px;font-size:11px;cursor:pointer;white-space:nowrap;font-family:'Heebo',sans-serif;font-weight:600;transition:all 0.15s;}
+.filter-chip.on{background:var(--primary);color:white;border-color:var(--primary);}
+.books-list{padding:10px 14px;display:flex;flex-direction:column;gap:8px;padding-bottom:100px;}
+.book-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;display:flex;gap:10px;align-items:flex-start;cursor:pointer;}
+.book-row:active{opacity:0.85;}
+.book-spine{width:38px;height:54px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.book-spine-sm{width:28px;height:38px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.book-data{flex:1;min-width:0;}
+.book-title-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px;line-height:1.4;}
+.book-title{font-size:13px;font-weight:700;}
+.book-author-inline{font-size:11px;color:var(--text-muted);}
+.book-author{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.book-tags{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;}
+.book-tag{font-size:10px;padding:1px 7px;border-radius:8px;font-weight:600;}
+.book-date{font-size:10px;color:var(--text-muted);margin-top:2px;}
+.book-also{font-size:10px;color:var(--primary);margin-top:2px;}
+.book-arr{font-size:20px;color:var(--border);align-self:center;flex-shrink:0;}
+.no-books{text-align:center;padding:30px 20px;color:var(--text-muted);font-size:13px;line-height:2;}
+
+/* CAMERA SCREEN */
+.cam-back{background:#0a0a0a;display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;}
+.cam-back span{color:rgba(255,255,255,0.8);font-size:13px;}
+.cam-lib-tag{margin-right:auto;color:rgba(255,255,255,0.45);font-size:10px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cam-wrap{background:#111;height:240px;position:relative;overflow:hidden;flex-shrink:0;}
+.viewfinder{position:absolute;inset:20px;border:2px solid rgba(255,255,255,0.2);border-radius:12px;}
+.corner{position:absolute;width:22px;height:22px;border-color:var(--accent);border-style:solid;}
+.c-tl{top:0;right:0;border-width:2px 0 0 2px;border-radius:0 0 0 8px;}
+.c-tr{top:0;left:0;border-width:2px 2px 0 0;border-radius:0 0 8px 0;}
+.c-bl{bottom:0;right:0;border-width:0 0 2px 2px;border-radius:8px 0 0 0;}
+.c-br{bottom:0;left:0;border-width:0 2px 2px 0;border-radius:0 8px 0 0;}
+.scan-line{position:absolute;left:24px;right:24px;height:2px;background:linear-gradient(to left,transparent,var(--accent),transparent);animation:scan 2s ease-in-out infinite;display:none;}
+.scan-line.active{display:block;}
+@keyframes scan{0%{top:24px;}50%{top:214px;}100%{top:24px;}}
+.cam-guide{position:absolute;inset:20px;display:flex;align-items:center;justify-content:center;}
+.cam-guide-text{color:rgba(255,255,255,0.7);font-size:12px;text-align:center;padding:10px 18px;background:rgba(0,0,0,0.5);border-radius:10px;line-height:1.7;}
+.cam-btns{background:#0a0a0a;padding:16px;display:flex;align-items:center;justify-content:center;gap:28px;flex-shrink:0;}
+.cam-side{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;}
+.cam-main{width:70px;height:70px;border-radius:50%;background:white;border:4px solid rgba(255,255,255,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:28px;transition:transform 0.15s;}
+.cam-main:active{transform:scale(0.93);}
+video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;}
+.ai-wrap{padding:14px;display:flex;flex-direction:column;gap:10px;padding-bottom:100px;}
+.ai-card{background:var(--surface);border:2px solid var(--primary);border-radius:var(--radius);padding:14px;}
+.ai-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.ai-title{font-size:14px;font-weight:700;flex:1;}
+.ai-chip{font-size:10px;padding:3px 10px;border-radius:10px;font-weight:700;background:#D1FAE5;color:#065F46;}
+.found-books{display:flex;flex-direction:column;gap:8px;}
+.found-book{display:flex;gap:10px;align-items:center;padding:8px 10px;background:var(--bg);border-radius:var(--radius-sm);}
+.found-spine{width:34px;height:48px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.found-info{flex:1;}
+.found-title{font-size:12px;font-weight:700;}
+.found-author{font-size:11px;color:var(--text-muted);}
+.conf{font-size:11px;color:var(--primary);font-weight:700;}
+.ai-actions{display:flex;gap:8px;margin-top:12px;}
+.ai-btn{flex:1;padding:11px;border-radius:var(--radius-sm);border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;}
+.ai-btn:active{opacity:0.85;}
+.ai-btn.pri{background:var(--primary);color:white;}
+.ai-btn.sec{background:var(--bg);color:var(--text);border:1px solid var(--border);}
+.loc-box{background:var(--primary-light);border:1px solid rgba(46,125,82,0.25);border-radius:var(--radius-sm);padding:10px 12px;font-size:12px;color:var(--primary-dark);line-height:1.7;}
+
+/* SEARCH SCREEN */
+.search-screen-wrap{padding:14px;padding-bottom:100px;}
+.big-search{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:12px 16px;display:flex;gap:10px;align-items:center;margin-bottom:16px;box-shadow:var(--shadow);}
+.big-search input{flex:1;border:none;outline:none;font-size:15px;direction:rtl;background:transparent;font-family:'Heebo',sans-serif;}
+.big-search-icon{font-size:20px;color:var(--text-muted);}
+.sr-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.sr-book-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+.sr-spine{width:40px;height:56px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.sr-info{flex:1;}
+.sr-title{font-size:14px;font-weight:700;}
+.sr-author{font-size:12px;color:var(--text-muted);}
+.sr-locs{border-top:1px solid var(--border);padding-top:8px;}
+.sr-loc-lbl{font-size:11px;color:var(--text-muted);margin-bottom:4px;}
+.sr-loc-row{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;}
+.sr-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;}
+.sr-loc-name{flex:1;font-size:12px;font-weight:600;}
+.sr-loc-date{font-size:10px;color:var(--text-muted);}
+.empty-state{text-align:center;padding:50px 20px;color:var(--text-muted);}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty-state p{font-size:14px;line-height:1.8;}
+
+/* BOTTOM NAV */
+.bottom-nav{background:var(--surface);border-top:1px solid var(--border);display:flex;padding:6px 0 env(safe-area-inset-bottom,10px);flex-shrink:0;z-index:10;}
+.bnav{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px 4px;cursor:pointer;font-size:10px;font-weight:600;color:var(--text-muted);border:none;background:none;font-family:'Heebo',sans-serif;transition:color 0.2s;}
+.bnav.on{color:var(--primary);}
+.bnav-icon{font-size:22px;line-height:1;}
+.bnav-bar{width:20px;height:3px;border-radius:2px;background:var(--primary);margin:2px auto 0;opacity:0;transition:opacity 0.2s;}
+.bnav.on .bnav-bar{opacity:1;}
+
+/* TOAST */
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(10px);background:#1a1a1a;color:white;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:all 0.28s;pointer-events:none;white-space:nowrap;font-family:'Heebo',sans-serif;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:var(--primary-dark);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;gap:16px;}
+.loading-logo{font-size:60px;}
+.loading-title{font-size:24px;font-weight:700;letter-spacing:-0.5px;}
+.loading-sub{font-size:13px;opacity:0.7;}
+.loading-bar{width:200px;height:3px;background:rgba(255,255,255,0.2);border-radius:2px;overflow:hidden;margin-top:8px;}
+.loading-bar-fill{height:100%;background:var(--accent);border-radius:2px;animation:load 1.5s ease forwards;}
+@keyframes load{from{width:0;}to{width:100%;}}
+
+/* GPS MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.modal-overlay.show{opacity:1;pointer-events:all;}
+.modal-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:20px 20px env(safe-area-inset-bottom,20px);width:100%;max-width:430px;transform:translateY(100%);transition:transform 0.28s;}
+.modal-overlay.show .modal-sheet{transform:translateY(0);}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:10px;}
+.modal-body{font-size:13px;color:var(--text-muted);line-height:1.8;margin-bottom:16px;}
+.modal-btn{width:100%;padding:13px;background:var(--primary);color:white;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loading">
+  <div class="loading-logo">📚</div>
+  <div class="loading-title">Librarytor</div>
+  <div class="loading-sub">הפרויקט הארצי לספריות קהילתיות</div>
+  <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+</div>
+
+<div class="app">
+  <div class="status-bar">
+    <span id="clock">9:41</span>
+    <div style="display:flex;gap:6px;font-size:10px;">📶 WiFi 🔋</div>
+  </div>
+  <div class="top-bar">
+    <div class="app-logo">📚</div>
+    <div class="top-bar-title">
+      <h1>Librarytor</h1>
+      <p>הפרויקט הארצי לספריות קהילתיות</p>
+    </div>
+    <div class="gps-badge" onclick="requestGPS()">
+      <div class="gps-dot" id="gps-dot"></div>
+      <span id="gps-label">GPS</span>
+    </div>
+  </div>
+
+  <div class="screens">
+
+    <!-- MAP / LIST SCREEN -->
+    <div class="screen active" id="s-map">
+      <div style="background:var(--surface);border-bottom:1px solid var(--border);">
+        <div class="search-wrap">
+          <div class="search-row">
+            <span>🔍</span>
+            <input type="text" id="map-search" placeholder="חיפוש ספריה לפי עיר או כתובת..." oninput="filterLibs()">
+          </div>
+          <div class="search-row" style="margin-top:7px;background:var(--primary-light);border-color:rgba(46,125,82,0.3);">
+            <span>📖</span>
+            <input type="text" id="quick-book-search" placeholder="חיפוש ספר בכל הספריות..." oninput="quickBookSearch()" style="color:var(--primary-dark);">
+          </div>
+        </div>
+        <div id="quick-book-results" style="display:none;background:var(--surface);border-bottom:1px solid var(--border);max-height:240px;overflow-y:auto;"></div>
+        <div style="display:flex;gap:6px;padding:0 14px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;" id="city-filters"></div>
+      </div>
+      <div class="section-head">
+        <span class="section-title">כל הספריות בישראל</span>
+        <span class="section-pill" id="lib-count">440 ספריות</span>
+      </div>
+      <div class="lib-cards" id="lib-cards"></div>
+    </div>
+
+    <!-- DETAIL SCREEN -->
+    <div class="screen" id="s-detail">
+      <div class="detail-hero">
+        <div class="back-row" onclick="goTo('map')">
+          <span style="font-size:18px;color:white;">&#8592;</span>
+          <span>חזרה לרשימה</span>
+        </div>
+        <div id="detail-photos-wrap" class="detail-photos"></div>
+        <div class="detail-info-box">
+          <div class="detail-name" id="d-name">ספריה</div>
+          <div class="detail-addr" id="d-addr">כתובת</div>
+          <div class="detail-coord" id="d-coord"></div>
+          <div class="detail-desc-box" id="d-desc" style="display:none;"></div>
+          <div class="detail-btns">
+            <div class="detail-btn" onclick="openNav()">📍 נווט ב-Waze</div>
+            <div class="detail-btn" onclick="openGoogleMaps()">🗺️ Google Maps</div>
+            <div class="detail-btn" onclick="goToCamera()">📷 סרוק</div>
+            <div class="detail-btn" onclick="showBookManager()" style="background:rgba(212,168,67,0.3);border-color:rgba(212,168,67,0.5);">✏️ ניהול ספרים</div>
+          </div>
+        </div>
+        <div class="detail-stats">
+          <div class="stat-cell"><div class="stat-n" id="d-books">0</div><div class="stat-l">ספרים</div></div>
+          <div class="stat-cell" onclick="scrollToPhotos()" style="cursor:pointer;"><div class="stat-n" id="d-photos-count">0</div><div class="stat-l">תמונות 📷</div></div>
+          <div class="stat-cell"><div class="stat-n" id="d-scans">0</div><div class="stat-l">סריקות</div></div>
+        </div>
+      </div>
+      <div class="books-toolbar">
+        <input class="search-box" type="text" placeholder="חיפוש לפי שם ספר או מחבר..." id="lib-q" oninput="renderBooks()">
+        <button class="filter-chip on" onclick="setFilter('all',this)">הכל</button>
+        <button class="filter-chip" onclick="setFilter('recent',this)">חדשים</button>
+      </div>
+      <div class="books-list" id="books-list"></div>
+    </div>
+
+    <!-- CAMERA SCREEN -->
+    <div class="screen" id="s-camera">
+      <div class="cam-back" onclick="goTo('detail')">
+        <span style="font-size:18px;color:white;">&#8592;</span>
+        <span style="color:rgba(255,255,255,0.8);">חזרה</span>
+        <span class="cam-lib-tag" id="cam-lib-name"></span>
+      </div>
+      <div class="cam-wrap">
+        <video id="cam-video" autoplay playsinline muted></video>
+        <div class="viewfinder">
+          <div class="corner c-tl"></div><div class="corner c-tr"></div>
+          <div class="corner c-bl"></div><div class="corner c-br"></div>
+        </div>
+        <div class="scan-line" id="scan-line"></div>
+        <div class="cam-guide" id="cam-guide">
+          <div class="cam-guide-text">כוון את המצלמה לעבר<br>שדרות הספרים בספריה<br>ולחץ על כפתור הסריקה</div>
+        </div>
+      </div>
+      <div class="cam-btns">
+        <div class="cam-side" onclick="switchCam()">🔄</div>
+        <div class="cam-main" onclick="doScan()">📷</div>
+        <div class="cam-side" onclick="showToast('⚡ פלאש')">⚡</div>
+      </div>
+      <div class="ai-wrap" id="ai-result" style="display:none;">
+        <div class="ai-card">
+          <div class="ai-head">
+            <span class="ai-title">ספרים שזוהו</span>
+            <span class="ai-chip" id="ai-chip">זוהו ספרים</span>
+          </div>
+          <div class="found-books" id="found-books"></div>
+          <div class="ai-actions">
+            <button class="ai-btn pri" onclick="saveBooks()">💾 שמור במאגר</button>
+            <button class="ai-btn sec" onclick="resetCam()">📷 סרוק שוב</button>
+          </div>
+        </div>
+        <div class="loc-box" id="loc-box"></div>
+      </div>
+    </div>
+
+    <!-- SEARCH SCREEN -->
+    <div class="screen" id="s-search">
+      <div class="search-screen-wrap">
+        <div class="big-search">
+          <div class="big-search-icon">🔍</div>
+          <input type="text" placeholder="חפש ספר לפי שם או מחבר..." id="global-q" oninput="globalSearch()">
+        </div>
+        <div id="search-results"></div>
+        <div class="empty-state" id="search-empty">
+          <div class="empty-icon">📖</div>
+          <p>חפש ספר כדי לגלות<br>באיזו ספריית רחוב הוא נמצא</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <button class="bnav on" id="bn-map" onclick="goTo('map')"><span class="bnav-icon">🗺️</span><span>ספריות</span><div class="bnav-bar"></div></button>
+    <button class="bnav" id="bn-detail" onclick="goTo('detail')" style="display:none;"><span class="bnav-icon">📖</span><span>ספריה</span><div class="bnav-bar"></div></button>
+    <button class="bnav" id="bn-camera" onclick="goTo('camera')"><span class="bnav-icon">📷</span><span>סריקה</span><div class="bnav-bar"></div></button>
+    <button class="bnav" id="bn-search" onclick="goTo('search')"><span class="bnav-icon">🔍</span><span>חיפוש ספר</span><div class="bnav-bar"></div></button>
+  </nav>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="modal-overlay" id="gps-modal" onclick="closeModal()">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📍 אפשר גישה למיקום</div>
+    <div class="modal-body">Librarytor צריכה גישה למיקומך כדי למיין ספריות לפי מרחק ולתעד את מיקום הסריקה.</div>
+    <button class="modal-btn" onclick="enableGPS()">📍 אפשר גישה למיקום</button>
+  </div>
+</div>
+
+<script src="libraries_data.js"></script>
+<script src="books_data.js"></script>
+<script>
+// ===== DATA & STATE =====
+let curLib = null, curFilter = 'all', scanIdx = 0;
+let userLat = null, userLng = null;
+let camStream = null, facing = 'environment';
+let booksDB = {};
+let filteredLibs = [];
+
+// ===== INIT =====
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const lo = document.getElementById('loading');
+    lo.style.opacity = '0'; lo.style.transition = 'opacity 0.4s';
+    setTimeout(() => lo.style.display = 'none', 400);
+  }, 1400);
+  try { const s = localStorage.getItem('librarytor_books'); if(s) booksDB = JSON.parse(s); } catch(e) {}
+  filteredLibs = [...LIBRARIES_DATA];
+  sortLibs();
+  renderLibCards();
+  buildCityFilters();
+  clock(); setInterval(clock, 30000);
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+  // Load shared books from Firebase
+  setTimeout(() => { if(typeof loadBooksFromFirebase==='function') loadBooksFromFirebase(); }, 500);
+});
+
+function clock() {
+  const n = new Date();
+  document.getElementById('clock').textContent = n.getHours().toString().padStart(2,'0') + ':' + n.getMinutes().toString().padStart(2,'0');
+}
+
+// ===== BOOKS =====
+function getBooksForLib(libId) {
+  const key = String(libId);
+  const real = (typeof BOOKS_DATA !== 'undefined' && BOOKS_DATA[key]) ? BOOKS_DATA[key] : [];
+  const user = booksDB[key] || booksDB[libId] || [];
+  const firebase = firebaseBooks[key] || [];
+  // Merge, avoid duplicates
+  const allUser = [...user, ...firebase.filter(fb => !user.find(u => u.title === fb.title))];
+  return [...real, ...allUser];
+}
+
+function findBookInLibraries(title, excludeLibId) {
+  const found = [];
+  const tl = title.toLowerCase();
+  if (typeof BOOKS_DATA !== 'undefined') {
+    Object.entries(BOOKS_DATA).forEach(([libId, books]) => {
+      if (parseInt(libId) === excludeLibId) return;
+      if (books.find(b => b.title.toLowerCase() === tl)) {
+        const lib = LIBRARIES_DATA[parseInt(libId)];
+        if (lib) found.push(lib);
+      }
+    });
+  }
+  Object.entries(booksDB).forEach(([libId, books]) => {
+    if (parseInt(libId) === excludeLibId) return;
+    if (books.find(b => b.title.toLowerCase() === tl)) {
+      const lib = LIBRARIES_DATA[parseInt(libId)];
+      if (lib && !found.find(f => f.id === lib.id)) found.push(lib);
+    }
+  });
+  return found;
+}
+
+// ===== DISTANCE =====
+function dist(lat1, lng1, lat2, lng2) {
+  const R = 6371000, dLat = (lat2-lat1)*Math.PI/180, dLng = (lng2-lng1)*Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+}
+function distStr(d) { return d < 1000 ? d + 'מ\'' : (d/1000).toFixed(1) + 'ק"מ'; }
+
+// ===== SORT =====
+function sortLibs() {
+  filteredLibs.sort((a, b) => {
+    const ba = getBooksForLib(a.id).length;
+    const bb = getBooksForLib(b.id).length;
+    if (bb !== ba) return bb - ba;
+    // then by has photos
+    const pa = (a.photos && a.photos.length > 0) ? 1 : 0;
+    const pb = (b.photos && b.photos.length > 0) ? 1 : 0;
+    if (pb !== pa) return pb - pa;
+    return a.name.localeCompare(b.name, 'he');
+  });
+}
+
+// ===== CITY FILTERS =====
+function buildCityFilters() {
+  const cities = {};
+  LIBRARIES_DATA.forEach(l => {
+    const city = l.name.split('-')[0].trim();
+    cities[city] = (cities[city] || 0) + 1;
+  });
+  const sorted = Object.entries(cities).sort((a,b) => b[1]-a[1]).slice(0, 20);
+  document.getElementById('city-filters').innerHTML = sorted.map(([city, count]) =>
+    `<button class="filter-chip" onclick="filterByCity('${city}', this)">${city} <span style="opacity:0.6">${count}</span></button>`
+  ).join('');
+}
+
+let activeCity = null;
+function filterByCity(city, btn) {
+  if (activeCity === city) {
+    activeCity = null;
+    document.querySelectorAll('#city-filters .filter-chip').forEach(b => b.classList.remove('on'));
+  } else {
+    activeCity = city;
+    document.querySelectorAll('#city-filters .filter-chip').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  }
+  filterLibs();
+}
+
+function filterLibs() {
+  const q = document.getElementById('map-search').value.toLowerCase().trim();
+  filteredLibs = LIBRARIES_DATA.filter(l => {
+    const matchCity = !activeCity || l.name.startsWith(activeCity);
+    const matchQ = !q || l.name.includes(q) || (l.desc && l.desc.includes(q));
+    return matchCity && matchQ;
+  });
+  if (userLat) {
+    filteredLibs.sort((a,b) => dist(userLat,userLng,a.lat,a.lng) - dist(userLat,userLng,b.lat,b.lng));
+  } else {
+    sortLibs();
+  }
+  document.getElementById('lib-count').textContent = filteredLibs.length + ' ספריות';
+  renderLibCards();
+}
+
+// ===== RENDER LIBRARY CARDS =====
+function renderLibCards() {
+  const el = document.getElementById('lib-cards');
+  const show = filteredLibs;
+  el.innerHTML = show.map(l => {
+    const d = userLat ? dist(userLat, userLng, l.lat, l.lng) : null;
+    const dStr = d ? distStr(d) : '';
+    const books = getBooksForLib(l.id);
+    const hasPhoto = l.photos && l.photos.length > 0;
+    const isDocumented = books.length > 0 || (l.docx_photos && l.docx_photos.length > 0);
+    const statusIcon = isDocumented
+      ? `<span style="color:#22c55e;font-size:10px;margin-left:4px;">●</span>`
+      : `<span style="color:#fca5a5;font-size:10px;margin-left:4px;">●</span>`;
+    return `<div class="lib-card" onclick="openLib(${l.id})" style="border-right:4px solid ${isDocumented?'#22c55e':'#ef4444'};">
+      <div class="lib-card-row">
+        <div class="lib-icon-wrap" style="position:relative;">
+          📚
+          <span style="position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:${isDocumented?'#22c55e':'#ef4444'};border:1.5px solid white;"></span>
+        </div>
+        <div class="lib-info">
+          <div class="lib-name">${l.name}</div>
+          ${l.desc ? `<div class="lib-addr">${l.desc.slice(0,55)}</div>` : ''}
+        </div>
+        <div class="lib-dist">${dStr}</div>
+      </div>
+      <div class="lib-badges">
+        ${books.length > 0 ? `<span class="badge b-green">${books.length} ספרים</span>` : '<span class="badge b-gray">טרם תועד</span>'}
+        ${(l.docx_photos && l.docx_photos.length > 0) ? `<span class="badge b-blue">${l.docx_photos.length} תמונות</span>` : ''}
+        ${l.photo_date ? `<span class="badge b-yellow">📷 ${l.photo_date}</span>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+}
+
+// ===== OPEN LIBRARY =====
+function openLib(id) {
+  curLib = id;
+  const l = LIBRARIES_DATA[id];
+
+  // Photos - embed Google MyMaps centered on this library
+  const pw = document.getElementById('detail-photos-wrap');
+  // Use docx_photos (local) first, fall back to Google Maps link
+  const localPhotos = l.docx_photos && l.docx_photos.length > 0 ? l.docx_photos : [];
+  const hasPhotos = localPhotos.length > 0;
+  const dateInfo = l.photo_date ? `📷 צולם: ${l.photo_date}` : '';
+  
+  if (hasPhotos) {
+    pw.innerHTML = `
+      <div style="padding:8px 14px 4px;font-size:11px;color:rgba(255,255,255,0.8);">
+        📷 ${localPhotos.length} תמונות${l.photo_date ? ' &nbsp;·&nbsp; צולם: ' + l.photo_date : ''}
+        <span style="opacity:0.5;font-size:10px;"> (לחץ להגדלה)</span>
+      </div>
+      <div style="display:flex;gap:8px;overflow-x:auto;padding:4px 14px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+        ${localPhotos.map(p => `
+          <img src="photos/${p}" 
+            style="width:140px;height:100px;border-radius:10px;object-fit:cover;flex-shrink:0;cursor:zoom-in;border:1px solid rgba(255,255,255,0.2);"
+            onclick="openPhotoFull('photos/${p}')"
+            loading="lazy"
+            onerror="this.parentElement.remove()">`
+        ).join('')}
+      </div>`;
+  } else {
+    pw.innerHTML = `<div style="padding:8px 14px;font-size:11px;color:rgba(255,255,255,0.35);">אין תמונות לספריה זו</div>`;
+  }
+  pw.style.display = 'block';
+
+  document.getElementById('d-name').textContent = l.name;
+  document.getElementById('d-addr').textContent = l.desc || (l.lat.toFixed(5) + '° N, ' + l.lng.toFixed(5) + '° E');
+  document.getElementById('d-coord').textContent = l.lat.toFixed(5) + '° N, ' + l.lng.toFixed(5) + '° E';
+  const descEl = document.getElementById('d-desc');
+  descEl.style.display = 'none';
+
+  const allBooks = getBooksForLib(id);
+  document.getElementById('d-books').textContent = allBooks.length;
+  document.getElementById('d-photos-count').textContent = (l.docx_photos && l.docx_photos.length) || 0;
+  document.getElementById('d-scans').textContent = allBooks.length > 0 ? Math.ceil(allBooks.length / 10) : 0;
+
+  document.getElementById('lib-q').value = '';
+  curFilter = 'all';
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('on'));
+  document.querySelector('.filter-chip').classList.add('on');
+  document.getElementById('bn-detail').style.display = 'flex';
+  renderBooks();
+  goTo('detail');
+}
+
+// ===== RENDER BOOKS =====
+function renderBooks() {
+  const q = (document.getElementById('lib-q').value || '').toLowerCase();
+  const allBooks = getBooksForLib(curLib);
+  const books = allBooks
+    .filter(b => curFilter === 'recent' ? b.recent : true)
+    .filter(b => !q || b.title.toLowerCase().includes(q) || (b.author && b.author.toLowerCase().includes(q)));
+
+  const el = document.getElementById('books-list');
+  if (!books.length) {
+    if (allBooks.length === 0) {
+      el.innerHTML = `<div class="no-books">📚<br>עדיין אין ספרים מתועדים בספריה זו<br><span style="font-size:12px;opacity:0.7;">לחץ "סרוק" כדי לתעד ספרים</span></div>`;
+    } else {
+      el.innerHTML = `<div class="no-books">🔍<br>לא נמצאו ספרים התואמים לחיפוש</div>`;
+    }
+    return;
+  }
+  const colors = ['#8B4513','#2E4057','#556B2F','#8B008B','#B8860B','#4B0082','#CD5C5C','#2F4F4F'];
+  const emojis = ['📕','📘','📗','📙','📒','📔','📓','📖'];
+  el.innerHTML = books.map((b, i) => {
+    const others = findBookInLibraries(b.title, curLib);
+    const bookId = 'book_' + i + '_' + curLib;
+    return `<div class="book-row" onclick="toggleBookLibs('${bookId}')">
+      <div class="book-spine-sm" style="background:${colors[i%8]}20;border:2px solid ${colors[i%8]}50;">${emojis[i%8]}</div>
+      <div class="book-data">
+        <div class="book-title-row">
+          <span class="book-title">${b.title}</span>
+          ${b.author ? `<span class="book-author-inline"> - ${b.author}</span>` : ''}
+        </div>
+        ${b.date ? `<div class="book-date">📅 ${b.date}</div>` : ''}
+        ${others.length > 0 ? `<div class="book-also" id="lbl_${bookId}">📍 גם ב-${others.length} ספריות נוספות - לחץ לפירוט</div>` : ''}
+      </div>
+      <div class="book-arr" id="arr_${bookId}">${others.length > 0 ? '›' : ''}</div>
+    </div>
+    ${others.length > 0 ? `<div id="${bookId}" style="display:none;background:#f0faf4;border:1px solid #bbf7d0;border-radius:8px;margin:-4px 0 4px;overflow:hidden;">
+      <div style="padding:6px 12px;font-size:11px;color:#15803d;font-weight:700;border-bottom:1px solid #bbf7d0;">📍 ספריות נוספות עם ספר זה:</div>
+      ${others.map(ol => `<div onclick="openLib(${ol.id})" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #dcfce7;cursor:pointer;">
+        <span style="color:#22c55e;">●</span>
+        <span style="flex:1;font-size:12px;font-weight:600;">${ol.name}</span>
+        <span style="font-size:16px;color:#22c55e;">›</span>
+      </div>`).join('')}
+    </div>` : ''}`;
+  }).join('');
+}
+
+function setFilter(f, el) {
+  curFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  renderBooks();
+}
+
+// ===== SHOW BOOK DETAIL (cross-library) =====
+function showBookDetail(title, author) {
+  const allLibs = [];
+  const tl = title.toLowerCase();
+  if (typeof BOOKS_DATA !== 'undefined') {
+    Object.entries(BOOKS_DATA).forEach(([libId, books]) => {
+      const match = books.find(b => b.title.toLowerCase() === tl);
+      if (match) {
+        const lib = LIBRARIES_DATA[parseInt(libId)];
+        if (lib) allLibs.push({lib, date: match.date});
+      }
+    });
+  }
+  Object.entries(booksDB).forEach(([libId, books]) => {
+    const match = books.find(b => b.title.toLowerCase() === tl);
+    if (match) {
+      const lib = LIBRARIES_DATA[parseInt(libId)];
+      if (lib && !allLibs.find(f => f.lib.id === lib.id)) allLibs.push({lib, date: match.date});
+    }
+  });
+
+  const overlay = document.createElement('div');
+  overlay.setAttribute('data-overlay','1');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:300;display:flex;align-items:flex-end;justify-content:center;font-family:Heebo,sans-serif;direction:rtl;';
+  overlay.onclick = e => { if(e.target===overlay) overlay.remove(); };
+
+  const locRows = allLibs.map(({lib, date}) => {
+    const d = userLat ? dist(userLat, userLng, lib.lat, lib.lng) : null;
+    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;" onclick="document.querySelectorAll('[data-overlay]').forEach(e=>e.remove());openLib(${lib.id})">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;"></div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:700;">${lib.name}</div>
+        ${date ? `<div style="font-size:11px;color:var(--text-muted);">📅 ${date}</div>` : ''}
+      </div>
+      ${d ? `<div style="font-size:12px;color:var(--primary);font-weight:700;">${distStr(d)}</div>` : ''}
+      <span style="font-size:20px;color:#ccc;">›</span>
+    </div>`;
+  }).join('');
+
+  overlay.innerHTML = `<div style="background:var(--surface);border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:430px;max-height:75vh;overflow-y:auto;">
+    <div style="width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:4px;">${title}</div>
+    ${author ? `<div style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">${author}</div>` : ''}
+    <div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:8px;">📍 נמצא ב-${allLibs.length} ספריות:</div>
+    ${locRows || '<div style="font-size:13px;color:var(--text-muted);padding:10px 0;">לא נמצא במאגר</div>'}
+    <button onclick="document.body.lastChild.remove()" style="width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;margin-top:14px;font-family:Heebo,sans-serif;">סגור</button>
+  </div>`;
+  document.body.appendChild(overlay);
+}
+
+// ===== PHOTO LIGHTBOX =====
+function openPhotoFull(url) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;';
+  overlay.onclick = () => overlay.remove();
+  overlay.innerHTML = `<img src="${url}" style="max-width:95vw;max-height:80vh;border-radius:8px;object-fit:contain;" onerror="this.style.display='none'">
+    <div style="color:rgba(255,255,255,0.5);font-size:12px;">לחץ לסגירה</div>`;
+  document.body.appendChild(overlay);
+}
+
+
+function toggleBookLibs(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.style.display !== 'none';
+  el.style.display = isOpen ? 'none' : 'block';
+  const arr = document.getElementById('arr_' + id);
+  if (arr) arr.textContent = isOpen ? '›' : '˅';
+  const lbl = document.getElementById('lbl_' + id);
+  if (lbl) lbl.style.color = isOpen ? '' : '#15803d';
+}
+
+function openInMaps(lat, lng) {
+  const MAP_ID = '1yP3Dc6mGVkfbEZFICsb2Uvz1OU_WqmU';
+  window.open(`https://www.google.com/maps/d/viewer?mid=${MAP_ID}&ll=${lat},${lng}&z=19`, '_blank');
+}
+function scrollToPhotos() {
+  document.getElementById('detail-photos-wrap').scrollIntoView({behavior:'smooth'});
+}
+
+// ===== CAMERA =====
+function goToCamera() {
+  if (curLib === null) { showToast('בחר ספריה תחילה'); return; }
+  document.getElementById('cam-lib-name').textContent = LIBRARIES_DATA[curLib].name;
+  resetCam();
+  goTo('camera');
+  startCam();
+}
+
+async function startCam() {
+  try {
+    if (camStream) camStream.getTracks().forEach(t => t.stop());
+    const stream = await navigator.mediaDevices.getUserMedia({video: {facingMode: facing}, audio: false});
+    camStream = stream;
+    const v = document.getElementById('cam-video');
+    v.srcObject = stream; v.style.display = 'block';
+    document.getElementById('cam-guide').innerHTML = '';
+  } catch(e) {
+    document.getElementById('cam-guide').innerHTML = '<div class="cam-guide-text">לחץ סריקה לזיהוי ספרים</div>';
+  }
+}
+
+function switchCam() { facing = facing==='environment'?'user':'environment'; startCam(); }
+
+const SCAN_SAMPLES = [
+  [{title:'הנביא',author:"ח'ליל ג'ובראן",conf:97},{title:'מקום לראש',author:'עמוס עוז',conf:92},{title:'תרצה',author:'רות אלמוג',conf:88}],
+  [{title:'אריה שאוהב תות שדה',author:'שני רצי',conf:95},{title:'אנה קרנינה',author:'טולסטוי',conf:79}],
+  [{title:'המגדל ועוד',author:'ש. יזהר',conf:91},{title:'ילדות',author:'אהרון אפלפלד',conf:85}]
+];
+
+function doScan() {
+  document.getElementById('scan-line').classList.add('active');
+  document.getElementById('cam-guide').innerHTML = '<div class="cam-guide-text" style="background:rgba(46,125,82,0.8);color:white;">מנתח...</div>';
+  setTimeout(() => {
+    document.getElementById('scan-line').classList.remove('active');
+    document.getElementById('cam-guide').innerHTML = '';
+    const results = SCAN_SAMPLES[scanIdx % SCAN_SAMPLES.length]; scanIdx++;
+    const colors = ['#8B4513','#2E4057','#556B2F'];
+    document.getElementById('found-books').innerHTML = results.map((r,i) =>
+      `<div class="found-book">
+        <div class="found-spine" style="background:${colors[i%3]}20;border:2px solid ${colors[i%3]}50;">📖</div>
+        <div class="found-info"><div class="found-title">${r.title}</div><div class="found-author">${r.author}</div></div>
+        <div class="conf">${r.conf}%</div>
+      </div>`).join('');
+    document.getElementById('ai-chip').textContent = `זוהו ${results.length} ספרים`;
+    const now = new Date();
+    const lib = LIBRARIES_DATA[curLib];
+    const locStr = userLat ? `${userLat.toFixed(5)}° N, ${userLng.toFixed(5)}° E` : 'מיקום לא זמין';
+    document.getElementById('loc-box').innerHTML = `📍 <strong>ספריה:</strong> ${lib.name}<br>🌐 ${locStr}<br>📅 ${now.toLocaleDateString('he-IL')}`;
+    document.getElementById('ai-result').style.display = 'flex';
+    document.getElementById('ai-result').style.flexDirection = 'column';
+    window._pendingBooks = results.map(r => ({...r, date: now.toLocaleDateString('he-IL'), recent: true}));
+  }, 2000);
+}
+
+function saveBooks() {
+  if (!window._pendingBooks || curLib === null) return;
+  const key = String(curLib);
+  if (!booksDB[key]) booksDB[key] = [];
+  let saved = 0;
+  window._pendingBooks.forEach(b => {
+    if (!booksDB[key].find(x => x.title === b.title)) {
+      booksDB[key].push(b);
+      // Save to Firebase for all users
+      if (typeof saveBookToFirebase === 'function') saveBookToFirebase(key, b);
+      saved++;
+    }
+  });
+  try { localStorage.setItem('librarytor_books', JSON.stringify(booksDB)); } catch(e) {}
+  showToast('✅ ' + saved + ' ספרים נשמרו לכל המשתמשים!');
+  renderBooks();
+  setTimeout(resetCam, 1800);
+}
+
+function resetCam() {
+  document.getElementById('ai-result').style.display = 'none';
+  document.getElementById('scan-line').classList.remove('active');
+  document.getElementById('cam-guide').innerHTML = '<div class="cam-guide-text">כוון את המצלמה לעבר<br>שדרות הספרים בספריה<br>ולחץ על כפתור הסריקה</div>';
+  window._pendingBooks = null;
+}
+
+// ===== NAVIGATION =====
+function openNav() {
+  if (curLib === null) return;
+  const l = LIBRARIES_DATA[curLib];
+  window.open(`waze://?ll=${l.lat},${l.lng}&navigate=yes`, '_blank');
+  setTimeout(() => window.open(`https://waze.com/ul?ll=${l.lat},${l.lng}&navigate=yes`, '_blank'), 300);
+}
+function openGoogleMaps() {
+  if (curLib === null) return;
+  const l = LIBRARIES_DATA[curLib];
+  window.open(`https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}`, '_blank');
+}
+
+// ===== BOOK SEARCH (global) =====
+
+function quickBookSearch() {
+  const q = document.getElementById('quick-book-search').value.toLowerCase().trim();
+  const container = document.getElementById('quick-book-results');
+  if (!q || q.length < 2) { container.style.display = 'none'; return; }
+
+  const found = {};
+  if (typeof BOOKS_DATA !== 'undefined') {
+    Object.entries(BOOKS_DATA).forEach(([libId, books]) => {
+      books.forEach(b => {
+        if (b.title.toLowerCase().includes(q) || (b.author && b.author.toLowerCase().includes(q))) {
+          const key = b.title;
+          if (!found[key]) found[key] = {title: b.title, author: b.author||'', libs: []};
+          const lib = LIBRARIES_DATA[parseInt(libId)];
+          if (lib) found[key].libs.push({lib, date: b.date||''});
+        }
+      });
+    });
+  }
+  Object.entries(booksDB).forEach(([libId, books]) => {
+    books.forEach(b => {
+      if (b.title.toLowerCase().includes(q) || (b.author && b.author.toLowerCase().includes(q))) {
+        const key = b.title;
+        if (!found[key]) found[key] = {title: b.title, author: b.author||'', libs: []};
+        const lib = LIBRARIES_DATA[parseInt(libId)];
+        if (lib && !found[key].libs.find(x => x.lib.id === lib.id))
+          found[key].libs.push({lib, date: b.date||''});
+      }
+    });
+  });
+
+  const results = Object.values(found);
+  if (!results.length) {
+    container.style.display = 'block';
+    container.innerHTML = '<div style="padding:12px 14px;font-size:13px;color:var(--text-muted);">לא נמצא ספר זה במאגר</div>';
+    return;
+  }
+
+  container.style.display = 'block';
+  container.innerHTML = results.slice(0,10).map(r => {
+    const libsList = r.libs.map(({lib, date}) => {
+      const d = userLat ? dist(userLat, userLng, lib.lat, lib.lng) : null;
+      return `<div onclick="document.getElementById('quick-book-results').style.display='none';document.getElementById('quick-book-search').value='';openLib(${lib.id})" 
+        style="display:flex;align-items:center;gap:8px;padding:6px 14px 6px 28px;cursor:pointer;border-top:1px solid var(--border);">
+        <span style="color:var(--primary);font-size:10px;">●</span>
+        <span style="flex:1;font-size:12px;">${lib.name}</span>
+        ${date ? `<span style="font-size:10px;color:var(--text-muted);">${date}</span>` : ''}
+        ${d ? `<span style="font-size:11px;color:var(--primary);font-weight:600;">${distStr(d)}</span>` : ''}
+      </div>`;
+    }).join('');
+    return `<div style="border-bottom:2px solid var(--border);">
+      <div style="padding:10px 14px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:14px;">📖</span>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;">${r.title}</div>
+          ${r.author ? `<div style="font-size:11px;color:var(--text-muted);">${r.author}</div>` : ''}
+          <div style="font-size:10px;color:var(--primary);margin-top:2px;">נמצא ב-${r.libs.length} ספריות</div>
+        </div>
+      </div>
+      ${libsList}
+    </div>`;
+  }).join('') + (results.length > 10 ? `<div style="padding:8px 14px;font-size:11px;color:var(--text-muted);text-align:center;">ועוד ${results.length-10} תוצאות - דייק את החיפוש</div>` : '');
+}
+
+function showBookManager() {
+  const overlay = document.createElement('div');
+  overlay.setAttribute('data-overlay','1');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:300;display:flex;align-items:flex-end;justify-content:center;font-family:Heebo,sans-serif;direction:rtl;';
+  overlay.onclick = e => { if(e.target===overlay) overlay.remove(); };
+
+  const key = String(curLib);
+  const userBooks = booksDB[key] || [];
+
+  function renderManager() {
+    const fbBooks = firebaseBooks[String(curLib)] || [];
+    const allUserBooks = [
+      ...userBooks.map(b => ({...b, _src:'local'})),
+      ...fbBooks.filter(fb => !userBooks.find(u => u.title === fb.title)).map(b => ({...b, _src:'firebase'}))
+    ];
+    overlay.querySelector('.manager-list').innerHTML = allUserBooks.length === 0
+      ? '<div style="padding:12px;color:var(--text-muted);font-size:13px;text-align:center;">אין ספרים שנוספו ידנית</div>'
+      : allUserBooks.map((b,i) => `
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);">
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;">${b.title}</div>
+            <div style="font-size:11px;color:var(--text-muted);">${b.author||''} ${b.date ? '· ' + b.date : ''}</div>
+            <div style="font-size:10px;color:${b._src==='firebase'?'#2E7D52':'#6B6B6B'};">${b._src==='firebase'?'☁️ משותף לכולם':'💾 מקומי'}</div>
+          </div>
+          <button onclick="removeBook(${i}, ${b._src==='firebase'}, '${b.fbKey||''}')" style="background:#fee2e2;color:#b91c1c;border:none;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:Heebo,sans-serif;">הסר</button>
+        </div>`).join('');
+  }
+
+  window.removeBook = function(idx, isFirebase, fbKey) {
+    const key = String(curLib);
+    if (isFirebase) {
+      // Remove from Firebase
+      if (fbKey && typeof removeBookFromFirebase === 'function') removeBookFromFirebase(key, fbKey);
+      firebaseBooks[key] = (firebaseBooks[key]||[]).filter(b => b.fbKey !== fbKey);
+    } else {
+      booksDB[key] = (booksDB[key]||[]).filter((_,i) => i !== idx);
+      try { localStorage.setItem('librarytor_books', JSON.stringify(booksDB)); } catch(e){}
+    }
+    renderBooks();
+    renderManager();
+  };
+
+  overlay.innerHTML = `<div style="background:var(--surface);border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:430px;max-height:85vh;display:flex;flex-direction:column;">
+    <div style="width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;"></div>
+    <div style="font-size:16px;font-weight:700;margin-bottom:4px;">✏️ ניהול ספרים</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">${LIBRARIES_DATA[curLib].name}</div>
+    
+    <div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:14px;">
+      <div style="font-size:12px;font-weight:700;margin-bottom:8px;">הוסף ספר ידנית:</div>
+      <input id="new-book-title" type="text" placeholder="שם הספר *" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;direction:rtl;font-family:Heebo,sans-serif;outline:none;margin-bottom:6px;background:var(--surface);">
+      <input id="new-book-author" type="text" placeholder="שם המחבר" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;direction:rtl;font-family:Heebo,sans-serif;outline:none;margin-bottom:8px;background:var(--surface);">
+      <button onclick="addBookManually()" style="width:100%;padding:9px;background:var(--primary);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:Heebo,sans-serif;">➕ הוסף ספר</button>
+    </div>
+    
+    <div style="font-size:12px;font-weight:700;margin-bottom:8px;">ספרים שנוספו ידנית:</div>
+    <div class="manager-list" style="overflow-y:auto;flex:1;"></div>
+    <button onclick="this.closest('[data-overlay]').remove()" style="width:100%;padding:11px;background:var(--bg);border:1px solid var(--border);border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;margin-top:12px;font-family:Heebo,sans-serif;">סגור</button>
+  </div>`;
+
+  document.body.appendChild(overlay);
+  renderManager();
+
+  window.addBookManually = function() {
+    const title = document.getElementById('new-book-title').value.trim();
+    const author = document.getElementById('new-book-author').value.trim();
+    if (!title) { document.getElementById('new-book-title').style.borderColor='#ef4444'; return; }
+    const key = String(curLib);
+    if (!booksDB[key]) booksDB[key] = [];
+    const now = new Date();
+    const newBook = {
+      title, author,
+      date: now.toLocaleDateString('he-IL'),
+      recent: true
+    };
+    booksDB[key].push(newBook);
+    try { localStorage.setItem('librarytor_books', JSON.stringify(booksDB)); } catch(e){}
+    // Save to Firebase for all users
+    if (typeof saveBookToFirebase === 'function') saveBookToFirebase(key, newBook);
+    document.getElementById('new-book-title').value = '';
+    document.getElementById('new-book-author').value = '';
+    renderBooks();
+    renderManager();
+    showToast('✅ הספר נוסף!');
+  };
+}
+function globalSearch() {
+  const q = document.getElementById('global-q').value.toLowerCase().trim();
+  const res = document.getElementById('search-results');
+  const emp = document.getElementById('search-empty');
+  if (!q) { res.innerHTML = ''; emp.style.display = 'block'; return; }
+  emp.style.display = 'none';
+
+  const found = [];
+  if (typeof BOOKS_DATA !== 'undefined') {
+    Object.entries(BOOKS_DATA).forEach(([libId, books]) => {
+      books.forEach(b => {
+        if (b.title.toLowerCase().includes(q) || (b.author && b.author.toLowerCase().includes(q))) {
+          found.push({...b, libId: parseInt(libId)});
+        }
+      });
+    });
+  }
+  Object.entries(booksDB).forEach(([libId, books]) => {
+    books.forEach(b => {
+      if (b.title.toLowerCase().includes(q) || (b.author && b.author.toLowerCase().includes(q))) {
+        if (!found.find(f => f.title === b.title && f.libId === parseInt(libId)))
+          found.push({...b, libId: parseInt(libId)});
+      }
+    });
+  });
+
+  if (!found.length) {
+    res.innerHTML = '<div class="empty-state"><div class="empty-icon">🔎</div><p>לא נמצא ספר זה במאגר<br><span style="font-size:12px;opacity:0.7;">הספר עדיין לא תועד בשום ספריה</span></p></div>';
+    return;
+  }
+
+  const grouped = {};
+  found.forEach(b => {
+    if (!grouped[b.title]) grouped[b.title] = {book: b, libs: []};
+    if (!grouped[b.title].libs.find(x => x.libId === b.libId))
+      grouped[b.title].libs.push({libId: b.libId, date: b.date});
+  });
+
+  const colors = ['#8B4513','#2E4057','#556B2F','#8B008B'];
+  const emojis = ['📕','📘','📗','📙'];
+  res.innerHTML = Object.entries(grouped).map(([title, {book, libs}], i) => {
+    const libRows = libs.map(({libId, date}) => {
+      const l = LIBRARIES_DATA[libId];
+      if (!l) return '';
+      const d = userLat ? dist(userLat,userLng,l.lat,l.lng) : null;
+      return `<div class="sr-loc-row" onclick="openLib(${libId})">
+        <div class="sr-dot"></div>
+        <div class="sr-loc-name">${l.name}</div>
+        <div class="sr-loc-date">${d ? distStr(d) : (date||'')}</div>
+      </div>`;
+    }).join('');
+    return `<div class="sr-card">
+      <div class="sr-book-row">
+        <div class="sr-spine" style="background:${colors[i%4]}20;border:2px solid ${colors[i%4]}50;">${emojis[i%4]}</div>
+        <div class="sr-info">
+          <div class="sr-title">${title}</div>
+          <div class="sr-author">${book.author||''}</div>
+          <span class="badge b-green" style="margin-top:4px;display:inline-block;">נמצא ב-${libs.length} ספריות</span>
+        </div>
+      </div>
+      <div class="sr-locs"><div class="sr-loc-lbl">📍 מיקומים:</div>${libRows}</div>
+    </div>`;
+  }).join('');
+}
+
+// ===== GPS =====
+function requestGPS() { document.getElementById('gps-modal').classList.add('show'); }
+function closeModal() { document.getElementById('gps-modal').classList.remove('show'); }
+function enableGPS() {
+  closeModal();
+  if (!navigator.geolocation) { showToast('GPS לא נתמך'); return; }
+  document.getElementById('gps-label').textContent = 'מאתר...';
+  navigator.geolocation.getCurrentPosition(pos => {
+    userLat = pos.coords.latitude; userLng = pos.coords.longitude;
+    document.getElementById('gps-label').textContent = 'פעיל';
+    document.getElementById('gps-dot').classList.add('active');
+    filterLibs();
+    showToast('📍 מיקום נמצא! ממוין לפי מרחק');
+  }, () => {
+    document.getElementById('gps-label').textContent = 'GPS';
+    showToast('לא ניתן לקבל מיקום');
+  }, {enableHighAccuracy: true, timeout: 10000});
+}
+
+function selectLib(id) { curLib = id; renderLibCards(); }
+
+// ===== SCREEN NAV =====
+function goTo(tab) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.bnav').forEach(b => b.classList.remove('on'));
+  document.getElementById('s-'+tab).classList.add('active');
+  const bn = document.getElementById('bn-'+tab);
+  if (bn) bn.classList.add('on');
+  if (tab !== 'camera' && camStream) {
+    camStream.getTracks().forEach(t => t.stop());
+    camStream = null;
+    document.getElementById('cam-video').style.display = 'none';
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  databaseURL: "https://librarytor-default-rtdb.firebaseio.com"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// ===== FIREBASE SYNC =====
+// Load all books from Firebase on startup
+function loadBooksFromFirebase() {
+  db.ref('books').on('value', snapshot => {
+    const data = snapshot.val();
+    if (data) {
+      // Merge Firebase data into booksDB
+      Object.entries(data).forEach(([libId, books]) => {
+        firebaseBooks[libId] = Object.values(books);
+      });
+      renderLibCards();
+      if (curLib !== null) renderBooks();
+    }
+  });
+}
+
+// Save book to Firebase
+function saveBookToFirebase(libId, book) {
+  const key = db.ref('books/' + libId).push().key;
+  book.fbKey = key;
+  book.timestamp = Date.now();
+  db.ref('books/' + libId + '/' + key).set(book);
+  return key;
+}
+
+// Remove book from Firebase
+function removeBookFromFirebase(libId, fbKey) {
+  db.ref('books/' + libId + '/' + fbKey).remove();
+}
+</script>
+</body>
+</html>
