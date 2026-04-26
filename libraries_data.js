@@ -12,8 +12,8 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/08/01",
     "books": [],
     "docx_photos": [
-      "image6.jpeg",
-      "image7.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image6.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image7.jpg"
     ]
   },
   {
@@ -30,9 +30,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image8.jpeg",
-      "image9.jpeg",
-      "image10.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image8.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image9.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image10.jpg"
     ]
   },
   {
@@ -45,7 +45,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image11.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image11.jpg"
     ]
   },
   {
@@ -58,7 +58,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image12.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image12.jpg"
     ]
   },
   {
@@ -82,7 +82,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image13.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image13.jpg"
     ]
   },
   {
@@ -99,9 +99,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/07/20",
     "books": [],
     "docx_photos": [
-      "image14.jpeg",
-      "image15.jpeg",
-      "image16.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image14.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image15.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image16.jpg"
     ]
   },
   {
@@ -147,7 +147,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image17.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image17.jpg"
     ]
   },
   {
@@ -160,8 +160,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image18.png",
-      "image19.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image18.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image19.jpg"
     ]
   },
   {
@@ -196,7 +196,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image20.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image20.jpg"
     ]
   },
   {
@@ -220,8 +220,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image21.jpeg",
-      "image22.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image21.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image22.jpg"
     ]
   },
   {
@@ -234,8 +234,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image21.jpeg",
-      "image22.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image21.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image22.jpg"
     ]
   },
   {
@@ -259,7 +259,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image23.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image23.jpg"
     ]
   },
   {
@@ -276,9 +276,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/07/23",
     "books": [],
     "docx_photos": [
-      "image24.jpeg",
-      "image25.jpeg",
-      "image26.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image24.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image25.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image26.jpg"
     ]
   },
   {
@@ -313,7 +313,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image27.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image27.jpg"
     ]
   },
   {
@@ -359,8 +359,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image28.png",
-      "image29.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image28.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image29.jpg"
     ]
   },
   {
@@ -384,7 +384,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image30.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image30.jpg"
     ]
   },
   {
@@ -400,9 +400,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image31.png",
-      "image32.png",
-      "image33.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image31.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image32.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image33.jpg"
     ]
   },
   {
@@ -459,7 +459,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image34.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image34.jpg"
     ]
   },
   {
@@ -505,7 +505,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image35.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image35.jpg"
     ]
   },
   {
@@ -551,7 +551,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image36.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image36.jpg"
     ]
   },
   {
@@ -619,7 +619,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image37.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image37.jpg"
     ]
   },
   {
@@ -632,7 +632,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image38.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image38.jpg"
     ]
   },
   {
@@ -648,9 +648,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/08",
     "books": [],
     "docx_photos": [
-      "image39.jpeg",
-      "image40.png",
-      "image41.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image39.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image40.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image41.jpg"
     ]
   },
   {
@@ -665,7 +665,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image43.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image43.jpg"
     ]
   },
   {
@@ -680,7 +680,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image42.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image42.jpg"
     ]
   },
   {
@@ -704,7 +704,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image45.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image45.jpg"
     ]
   },
   {
@@ -719,7 +719,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image44.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image44.jpg"
     ]
   },
   {
@@ -735,8 +735,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image46.jpeg",
-      "image47.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image46.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image47.jpg"
     ]
   },
   {
@@ -751,7 +751,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image48.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image48.jpg"
     ]
   },
   {
@@ -766,8 +766,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image49.jpeg",
-      "image50.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image49.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image50.jpg"
     ]
   },
   {
@@ -824,7 +824,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image51.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image51.jpg"
     ]
   },
   {
@@ -839,7 +839,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image52.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image52.jpg"
     ]
   },
   {
@@ -854,7 +854,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image52.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image52.jpg"
     ]
   },
   {
@@ -869,7 +869,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image53.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image53.jpg"
     ]
   },
   {
@@ -882,7 +882,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image54.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image54.jpg"
     ]
   },
   {
@@ -917,7 +917,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image55.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image55.jpg"
     ]
   },
   {
@@ -952,7 +952,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image56.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image56.jpg"
     ]
   },
   {
@@ -969,9 +969,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/12",
     "books": [],
     "docx_photos": [
-      "image57.jpeg",
-      "image58.jpeg",
-      "image59.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image57.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image58.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image59.jpg"
     ]
   },
   {
@@ -987,8 +987,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image60.jpeg",
-      "image61.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image60.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image61.jpg"
     ]
   },
   {
@@ -1023,7 +1023,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image62.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image62.jpg"
     ]
   },
   {
@@ -1036,7 +1036,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image63.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image63.jpg"
     ]
   },
   {
@@ -1049,7 +1049,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image64.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image64.jpg"
     ]
   },
   {
@@ -1073,7 +1073,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image65.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image65.jpg"
     ]
   },
   {
@@ -1088,7 +1088,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/27",
     "books": [],
     "docx_photos": [
-      "image66.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image66.jpg"
     ]
   },
   {
@@ -1103,7 +1103,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/27",
     "books": [],
     "docx_photos": [
-      "image67.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image67.jpg"
     ]
   },
   {
@@ -1118,7 +1118,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image68.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image68.jpg"
     ]
   },
   {
@@ -1133,7 +1133,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/27",
     "books": [],
     "docx_photos": [
-      "image69.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image69.jpg"
     ]
   },
   {
@@ -1148,7 +1148,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/27",
     "books": [],
     "docx_photos": [
-      "image70.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image70.jpg"
     ]
   },
   {
@@ -1161,7 +1161,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/27",
     "books": [],
     "docx_photos": [
-      "image71.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image71.jpg"
     ]
   },
   {
@@ -1176,7 +1176,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/27",
     "books": [],
     "docx_photos": [
-      "image72.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image72.jpg"
     ]
   },
   {
@@ -1204,9 +1204,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/07/19",
     "books": [],
     "docx_photos": [
-      "image73.jpeg",
-      "image74.jpeg",
-      "image75.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image73.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image74.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image75.jpg"
     ]
   },
   {
@@ -1219,9 +1219,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/27",
     "books": [],
     "docx_photos": [
-      "image73.jpeg",
-      "image74.jpeg",
-      "image75.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image73.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image74.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image75.jpg"
     ]
   },
   {
@@ -1234,7 +1234,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image76.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image76.jpg"
     ]
   },
   {
@@ -1401,7 +1401,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image77.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image77.jpg"
     ]
   },
   {
@@ -1414,7 +1414,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image77.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image77.jpg"
     ]
   },
   {
@@ -1427,7 +1427,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image77.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image77.jpg"
     ]
   },
   {
@@ -1462,7 +1462,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image78.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image78.jpg"
     ]
   },
   {
@@ -1497,7 +1497,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image79.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image79.jpg"
     ]
   },
   {
@@ -1510,7 +1510,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image80.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image80.jpg"
     ]
   },
   {
@@ -1556,8 +1556,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image82.png",
-      "image83.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image82.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image83.jpg"
     ]
   },
   {
@@ -1570,7 +1570,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image81.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image81.jpg"
     ]
   },
   {
@@ -1605,7 +1605,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image84.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image84.jpg"
     ]
   },
   {
@@ -1618,7 +1618,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image85.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image85.jpg"
     ]
   },
   {
@@ -1634,8 +1634,8 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/12",
     "books": [],
     "docx_photos": [
-      "image86.jpeg",
-      "image87.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image86.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image87.jpg"
     ]
   },
   {
@@ -1703,8 +1703,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image88.jpeg",
-      "image89.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image88.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image89.jpg"
     ]
   },
   {
@@ -1732,9 +1732,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image90.jpeg",
-      "image91.jpeg",
-      "image92.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image90.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image91.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image92.jpg"
     ]
   },
   {
@@ -1762,9 +1762,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/19",
     "books": [],
     "docx_photos": [
-      "image93.jpeg",
-      "image94.jpeg",
-      "image95.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image93.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image94.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image95.jpg"
     ]
   },
   {
@@ -1788,7 +1788,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image96.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image96.jpg"
     ]
   },
   {
@@ -1801,7 +1801,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image97.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image97.jpg"
     ]
   },
   {
@@ -1836,7 +1836,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image98.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image98.jpg"
     ]
   },
   {
@@ -1849,7 +1849,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image99.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image99.jpg"
     ]
   },
   {
@@ -1884,7 +1884,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image100.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image100.jpg"
     ]
   },
   {
@@ -1930,7 +1930,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image101.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image101.jpg"
     ]
   },
   {
@@ -1943,7 +1943,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image101.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image101.jpg"
     ]
   },
   {
@@ -1956,7 +1956,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image101.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image101.jpg"
     ]
   },
   {
@@ -1969,7 +1969,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image101.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image101.jpg"
     ]
   },
   {
@@ -1982,7 +1982,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image102.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image102.jpg"
     ]
   },
   {
@@ -1995,7 +1995,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image102.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image102.jpg"
     ]
   },
   {
@@ -2041,7 +2041,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image103.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image103.jpg"
     ]
   },
   {
@@ -2054,7 +2054,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image103.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image103.jpg"
     ]
   },
   {
@@ -2089,7 +2089,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image104.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image104.jpg"
     ]
   },
   {
@@ -2102,7 +2102,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image104.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image104.jpg"
     ]
   },
   {
@@ -2115,7 +2115,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image104.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image104.jpg"
     ]
   },
   {
@@ -2128,7 +2128,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image104.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image104.jpg"
     ]
   },
   {
@@ -2152,7 +2152,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image105.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image105.jpg"
     ]
   },
   {
@@ -2176,7 +2176,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image105.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image105.jpg"
     ]
   },
   {
@@ -2193,9 +2193,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image106.jpeg",
-      "image107.jpeg",
-      "image108.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image106.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image107.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image108.jpg"
     ]
   },
   {
@@ -2214,9 +2214,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image109.jpeg",
-      "image110.jpeg",
-      "image111.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image109.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image110.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image111.jpg"
     ]
   },
   {
@@ -2273,7 +2273,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image112.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image112.jpg"
     ]
   },
   {
@@ -2297,7 +2297,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image113.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image113.jpg"
     ]
   },
   {
@@ -2310,7 +2310,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image114.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image114.jpg"
     ]
   },
   {
@@ -2351,9 +2351,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image115.jpeg",
-      "image116.jpeg",
-      "image117.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image115.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image116.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image117.jpg"
     ]
   },
   {
@@ -2368,9 +2368,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image118.jpeg",
-      "image119.jpeg",
-      "image120.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image118.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image119.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image120.jpg"
     ]
   },
   {
@@ -2387,9 +2387,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image121.jpeg",
-      "image122.jpeg",
-      "image123.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image121.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image122.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image123.jpg"
     ]
   },
   {
@@ -2406,9 +2406,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/07/08",
     "books": [],
     "docx_photos": [
-      "image124.jpeg",
-      "image125.jpeg",
-      "image126.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image124.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image125.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image126.jpg"
     ]
   },
   {
@@ -2425,9 +2425,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image127.jpeg",
-      "image128.jpeg",
-      "image129.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image127.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image128.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image129.jpg"
     ]
   },
   {
@@ -2442,8 +2442,8 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/17",
     "books": [],
     "docx_photos": [
-      "image130.png",
-      "image131.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image130.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image131.jpg"
     ]
   },
   {
@@ -2555,7 +2555,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image136.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image136.jpg"
     ]
   },
   {
@@ -2570,7 +2570,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image132.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image132.jpg"
     ]
   },
   {
@@ -2585,7 +2585,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image133.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image133.jpg"
     ]
   },
   {
@@ -2600,7 +2600,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image134.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image134.jpg"
     ]
   },
   {
@@ -2615,7 +2615,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image135.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image135.jpg"
     ]
   },
   {
@@ -2628,7 +2628,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image137.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image137.jpg"
     ]
   },
   {
@@ -2643,7 +2643,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image136.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image136.jpg"
     ]
   },
   {
@@ -2678,8 +2678,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image138.png",
-      "image139.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image138.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image139.jpg"
     ]
   },
   {
@@ -2747,7 +2747,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image140.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image140.jpg"
     ]
   },
   {
@@ -2760,7 +2760,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image140.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image140.jpg"
     ]
   },
   {
@@ -2839,9 +2839,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image141.jpeg",
-      "image142.jpeg",
-      "image143.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image141.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image142.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image143.jpg"
     ]
   },
   {
@@ -2858,9 +2858,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/24",
     "books": [],
     "docx_photos": [
-      "image141.jpeg",
-      "image142.jpeg",
-      "image143.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image141.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image142.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image143.jpg"
     ]
   },
   {
@@ -2873,9 +2873,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image141.jpeg",
-      "image142.jpeg",
-      "image143.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image141.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image142.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image143.jpg"
     ]
   },
   {
@@ -2888,7 +2888,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image144.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image144.jpg"
     ]
   },
   {
@@ -2901,7 +2901,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image145.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image145.jpg"
     ]
   },
   {
@@ -2969,7 +2969,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image146.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image146.jpg"
     ]
   },
   {
@@ -2987,9 +2987,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/07/23",
     "books": [],
     "docx_photos": [
-      "image147.jpeg",
-      "image148.jpeg",
-      "image149.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image147.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image148.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image149.jpg"
     ]
   },
   {
@@ -3051,8 +3051,8 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/08/07",
     "books": [],
     "docx_photos": [
-      "image150.jpeg",
-      "image151.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image150.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image151.jpg"
     ]
   },
   {
@@ -3069,9 +3069,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/08/07",
     "books": [],
     "docx_photos": [
-      "image155.jpeg",
-      "image156.jpeg",
-      "image157.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image155.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image156.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image157.jpg"
     ]
   },
   {
@@ -3087,8 +3087,8 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/08/07",
     "books": [],
     "docx_photos": [
-      "image158.jpeg",
-      "image159.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image158.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image159.jpg"
     ]
   },
   {
@@ -3101,9 +3101,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/08/07",
     "books": [],
     "docx_photos": [
-      "image152.jpeg",
-      "image153.jpeg",
-      "image154.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image152.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image153.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image154.jpg"
     ]
   },
   {
@@ -3116,7 +3116,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image160.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image160.jpg"
     ]
   },
   {
@@ -3217,7 +3217,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image161.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image161.jpg"
     ]
   },
   {
@@ -3252,7 +3252,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image162.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image162.jpg"
     ]
   },
   {
@@ -3276,7 +3276,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image163.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image163.jpg"
     ]
   },
   {
@@ -3300,7 +3300,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image164.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image164.jpg"
     ]
   },
   {
@@ -3313,7 +3313,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image164.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image164.jpg"
     ]
   },
   {
@@ -3326,7 +3326,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image165.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image165.jpg"
     ]
   },
   {
@@ -3339,7 +3339,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image166.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image166.jpg"
     ]
   },
   {
@@ -3352,7 +3352,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image167.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image167.jpg"
     ]
   },
   {
@@ -3387,7 +3387,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image168.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image168.jpg"
     ]
   },
   {
@@ -3400,7 +3400,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image169.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image169.jpg"
     ]
   },
   {
@@ -3413,7 +3413,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image170.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image170.jpg"
     ]
   },
   {
@@ -3426,7 +3426,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image171.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image171.jpg"
     ]
   },
   {
@@ -3439,7 +3439,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image172.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image172.jpg"
     ]
   },
   {
@@ -3499,8 +3499,8 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/08/06",
     "books": [],
     "docx_photos": [
-      "image173.jpeg",
-      "image174.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image173.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image174.jpg"
     ]
   },
   {
@@ -3513,7 +3513,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image175.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image175.jpg"
     ]
   },
   {
@@ -3550,7 +3550,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image176.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image176.jpg"
     ]
   },
   {
@@ -3568,9 +3568,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/01",
     "books": [],
     "docx_photos": [
-      "image177.jpeg",
-      "image178.jpeg",
-      "image179.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image177.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image178.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image179.jpg"
     ]
   },
   {
@@ -3587,9 +3587,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/13",
     "books": [],
     "docx_photos": [
-      "image180.jpeg",
-      "image181.jpeg",
-      "image182.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image180.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image181.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image182.jpg"
     ]
   },
   {
@@ -3605,8 +3605,8 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/27",
     "books": [],
     "docx_photos": [
-      "image183.jpeg",
-      "image184.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image183.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image184.jpg"
     ]
   },
   {
@@ -3619,7 +3619,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/28",
     "books": [],
     "docx_photos": [
-      "image185.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image185.jpg"
     ]
   },
   {
@@ -3634,7 +3634,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/23",
     "books": [],
     "docx_photos": [
-      "image186.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image186.jpg"
     ]
   },
   {
@@ -3650,8 +3650,8 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/25",
     "books": [],
     "docx_photos": [
-      "image187.jpeg",
-      "image188.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image187.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image188.jpg"
     ]
   },
   {
@@ -3664,9 +3664,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image189.jpeg",
-      "image190.jpeg",
-      "image191.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image189.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image190.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image191.jpg"
     ]
   },
   {
@@ -3683,9 +3683,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image189.jpeg",
-      "image190.jpeg",
-      "image191.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image189.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image190.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image191.jpg"
     ]
   },
   {
@@ -3720,7 +3720,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image192.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image192.jpg"
     ]
   },
   {
@@ -3733,7 +3733,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image193.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image193.jpg"
     ]
   },
   {
@@ -3761,9 +3761,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image194.jpeg",
-      "image195.jpeg",
-      "image196.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image194.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image195.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image196.jpg"
     ]
   },
   {
@@ -3780,9 +3780,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/08",
     "books": [],
     "docx_photos": [
-      "image197.jpeg",
-      "image198.jpeg",
-      "image199.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image197.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image198.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image199.jpg"
     ]
   },
   {
@@ -3799,9 +3799,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/12",
     "books": [],
     "docx_photos": [
-      "image200.jpeg",
-      "image201.jpeg",
-      "image202.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image200.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image201.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image202.jpg"
     ]
   },
   {
@@ -3818,9 +3818,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/12",
     "books": [],
     "docx_photos": [
-      "image203.jpeg",
-      "image204.jpeg",
-      "image205.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image203.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image204.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image205.jpg"
     ]
   },
   {
@@ -3833,7 +3833,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image206.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image206.jpg"
     ]
   },
   {
@@ -3872,9 +3872,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/17",
     "books": [],
     "docx_photos": [
-      "image208.jpeg",
-      "image209.jpeg",
-      "image210.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image208.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image209.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image210.jpg"
     ]
   },
   {
@@ -3891,9 +3891,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/17",
     "books": [],
     "docx_photos": [
-      "image211.jpeg",
-      "image212.jpeg",
-      "image213.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image211.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image212.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image213.jpg"
     ]
   },
   {
@@ -3910,9 +3910,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/17",
     "books": [],
     "docx_photos": [
-      "image214.jpeg",
-      "image215.jpeg",
-      "image216.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image214.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image215.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image216.jpg"
     ]
   },
   {
@@ -3925,7 +3925,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image207.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image207.jpg"
     ]
   },
   {
@@ -3938,7 +3938,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image217.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image217.jpg"
     ]
   },
   {
@@ -3951,7 +3951,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image217.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image217.jpg"
     ]
   },
   {
@@ -4140,7 +4140,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image218.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image218.jpg"
     ]
   },
   {
@@ -4153,7 +4153,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image219.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image219.jpg"
     ]
   },
   {
@@ -4177,7 +4177,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image219.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image219.jpg"
     ]
   },
   {
@@ -4269,7 +4269,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/06/03",
     "books": [],
     "docx_photos": [
-      "image220.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image220.jpg"
     ]
   },
   {
@@ -4282,7 +4282,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image221.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image221.jpg"
     ]
   },
   {
@@ -4297,7 +4297,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/06/03",
     "books": [],
     "docx_photos": [
-      "image222.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image222.jpg"
     ]
   },
   {
@@ -4312,7 +4312,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/06/03",
     "books": [],
     "docx_photos": [
-      "image223.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image223.jpg"
     ]
   },
   {
@@ -4327,7 +4327,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/06/03",
     "books": [],
     "docx_photos": [
-      "image224.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image224.jpg"
     ]
   },
   {
@@ -4342,7 +4342,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/06/03",
     "books": [],
     "docx_photos": [
-      "image225.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image225.jpg"
     ]
   },
   {
@@ -4355,7 +4355,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image226.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image226.jpg"
     ]
   },
   {
@@ -4370,7 +4370,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/06/03",
     "books": [],
     "docx_photos": [
-      "image226.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image226.jpg"
     ]
   },
   {
@@ -4396,7 +4396,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/06/03",
     "books": [],
     "docx_photos": [
-      "image227.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image227.jpg"
     ]
   },
   {
@@ -4411,7 +4411,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/06/03",
     "books": [],
     "docx_photos": [
-      "image228.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image228.jpg"
     ]
   },
   {
@@ -4435,8 +4435,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image229.jpeg",
-      "image230.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image229.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image230.jpg"
     ]
   },
   {
@@ -4460,7 +4460,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image231.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image231.jpg"
     ]
   },
   {
@@ -4473,8 +4473,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image232.png",
-      "image233.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image232.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image233.jpg"
     ]
   },
   {
@@ -4491,9 +4491,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image234.jpeg",
-      "image235.png",
-      "image236.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image234.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image235.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image236.jpg"
     ]
   },
   {
@@ -4510,9 +4510,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image237.jpeg",
-      "image238.jpeg",
-      "image239.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image237.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image238.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image239.jpg"
     ]
   },
   {
@@ -4529,9 +4529,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image240.jpeg",
-      "image241.jpeg",
-      "image242.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image240.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image241.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image242.jpg"
     ]
   },
   {
@@ -4548,9 +4548,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/06/11",
     "books": [],
     "docx_photos": [
-      "image243.jpeg",
-      "image244.jpeg",
-      "image245.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image243.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image244.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image245.jpg"
     ]
   },
   {
@@ -4563,9 +4563,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image246.jpeg",
-      "image247.jpeg",
-      "image248.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image246.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image247.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image248.jpg"
     ]
   },
   {
@@ -4582,9 +4582,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image246.jpeg",
-      "image247.jpeg",
-      "image248.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image246.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image247.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image248.jpg"
     ]
   },
   {
@@ -4601,9 +4601,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image249.jpeg",
-      "image250.jpeg",
-      "image251.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image249.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image250.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image251.jpg"
     ]
   },
   {
@@ -4620,9 +4620,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image252.jpeg",
-      "image253.jpeg",
-      "image254.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image252.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image253.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image254.jpg"
     ]
   },
   {
@@ -4639,9 +4639,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image255.jpeg",
-      "image256.jpeg",
-      "image257.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image255.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image256.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image257.jpg"
     ]
   },
   {
@@ -4658,9 +4658,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image261.jpeg",
-      "image262.jpeg",
-      "image263.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image261.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image262.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image263.jpg"
     ]
   },
   {
@@ -4677,9 +4677,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image258.jpeg",
-      "image259.jpeg",
-      "image260.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image258.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image259.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image260.jpg"
     ]
   },
   {
@@ -4696,9 +4696,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image264.jpeg",
-      "image265.jpeg",
-      "image266.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image264.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image265.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image266.jpg"
     ]
   },
   {
@@ -4715,9 +4715,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image267.jpeg",
-      "image268.jpeg",
-      "image269.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image267.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image268.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image269.jpg"
     ]
   },
   {
@@ -4734,9 +4734,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image270.jpeg",
-      "image271.jpeg",
-      "image272.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image270.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image271.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image272.jpg"
     ]
   },
   {
@@ -4753,9 +4753,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image273.jpeg",
-      "image274.jpeg",
-      "image275.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image273.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image274.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image275.jpg"
     ]
   },
   {
@@ -4772,9 +4772,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image276.jpeg",
-      "image277.jpeg",
-      "image278.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image276.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image277.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image278.jpg"
     ]
   },
   {
@@ -4791,9 +4791,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image282.jpeg",
-      "image283.jpeg",
-      "image284.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image282.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image283.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image284.jpg"
     ]
   },
   {
@@ -4810,9 +4810,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image279.jpeg",
-      "image280.jpeg",
-      "image281.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image279.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image280.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image281.jpg"
     ]
   },
   {
@@ -4829,9 +4829,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image285.jpeg",
-      "image286.jpeg",
-      "image287.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image285.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image286.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image287.jpg"
     ]
   },
   {
@@ -4846,7 +4846,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image288.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image288.jpg"
     ]
   },
   {
@@ -4861,8 +4861,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image289.jpeg",
-      "image290.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image289.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image290.jpg"
     ]
   },
   {
@@ -4878,8 +4878,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image291.jpeg",
-      "image292.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image291.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image292.jpg"
     ]
   },
   {
@@ -4895,8 +4895,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image293.jpeg",
-      "image294.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image293.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image294.jpg"
     ]
   },
   {
@@ -4911,8 +4911,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image295.jpeg",
-      "image296.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image295.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image296.jpg"
     ]
   },
   {
@@ -4939,8 +4939,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image300.jpeg",
-      "image301.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image300.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image301.jpg"
     ]
   },
   {
@@ -4953,8 +4953,8 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image298.jpeg",
-      "image299.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image298.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image299.jpg"
     ]
   },
   {
@@ -4982,9 +4982,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/25",
     "books": [],
     "docx_photos": [
-      "image302.jpeg",
-      "image303.jpeg",
-      "image304.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image302.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image303.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image304.jpg"
     ]
   },
   {
@@ -5041,7 +5041,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image305.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image305.jpg"
     ]
   },
   {
@@ -5087,7 +5087,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image307.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image307.jpg"
     ]
   },
   {
@@ -5100,7 +5100,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image306.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image306.jpg"
     ]
   },
   {
@@ -5113,7 +5113,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image308.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image308.jpg"
     ]
   },
   {
@@ -5137,7 +5137,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image309.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image309.jpg"
     ]
   },
   {
@@ -5150,9 +5150,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image285.jpeg",
-      "image286.jpeg",
-      "image287.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image285.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image286.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image287.jpg"
     ]
   },
   {
@@ -5165,9 +5165,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image282.jpeg",
-      "image283.jpeg",
-      "image284.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image282.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image283.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image284.jpg"
     ]
   },
   {
@@ -5180,7 +5180,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image311.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image311.jpg"
     ]
   },
   {
@@ -5193,7 +5193,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image310.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image310.jpg"
     ]
   },
   {
@@ -5206,7 +5206,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image311.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image311.jpg"
     ]
   },
   {
@@ -5219,7 +5219,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image312.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image312.jpg"
     ]
   },
   {
@@ -5236,9 +5236,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image313.jpeg",
-      "image314.jpeg",
-      "image315.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image313.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image314.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image315.jpg"
     ]
   },
   {
@@ -5254,8 +5254,8 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/28",
     "books": [],
     "docx_photos": [
-      "image316.jpeg",
-      "image317.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image316.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image317.jpg"
     ]
   },
   {
@@ -5279,7 +5279,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image318.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image318.jpg"
     ]
   },
   {
@@ -5292,7 +5292,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image318.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image318.jpg"
     ]
   },
   {
@@ -5327,7 +5327,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image319.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image319.jpg"
     ]
   },
   {
@@ -5351,7 +5351,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image320.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image320.jpg"
     ]
   },
   {
@@ -5364,7 +5364,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image322.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image322.jpg"
     ]
   },
   {
@@ -5379,7 +5379,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/09",
     "books": [],
     "docx_photos": [
-      "image321.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image321.jpg"
     ]
   },
   {
@@ -5394,7 +5394,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/25",
     "books": [],
     "docx_photos": [
-      "image324.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image324.jpg"
     ]
   },
   {
@@ -5409,7 +5409,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/25",
     "books": [],
     "docx_photos": [
-      "image323.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image323.jpg"
     ]
   },
   {
@@ -5424,7 +5424,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/25",
     "books": [],
     "docx_photos": [
-      "image325.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image325.jpg"
     ]
   },
   {
@@ -5437,7 +5437,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image326.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image326.jpg"
     ]
   },
   {
@@ -5454,9 +5454,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/10/05",
     "books": [],
     "docx_photos": [
-      "image327.jpeg",
-      "image328.jpeg",
-      "image329.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image327.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image328.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image329.jpg"
     ]
   },
   {
@@ -5469,7 +5469,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image330.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image330.jpg"
     ]
   },
   {
@@ -5482,7 +5482,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image331.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image331.jpg"
     ]
   },
   {
@@ -5506,7 +5506,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image332.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image332.jpg"
     ]
   },
   {
@@ -5519,7 +5519,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image333.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image333.jpg"
     ]
   },
   {
@@ -5534,7 +5534,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/25",
     "books": [],
     "docx_photos": [
-      "image334.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image334.jpg"
     ]
   },
   {
@@ -5549,7 +5549,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/25",
     "books": [],
     "docx_photos": [
-      "image335.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image335.jpg"
     ]
   },
   {
@@ -5564,7 +5564,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/25",
     "books": [],
     "docx_photos": [
-      "image336.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image336.jpg"
     ]
   },
   {
@@ -5579,7 +5579,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/24",
     "books": [],
     "docx_photos": [
-      "image337.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image337.jpg"
     ]
   },
   {
@@ -5594,7 +5594,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/05/25",
     "books": [],
     "docx_photos": [
-      "image338.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image338.jpg"
     ]
   },
   {
@@ -5607,7 +5607,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image335.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image335.jpg"
     ]
   },
   {
@@ -5624,9 +5624,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image339.jpeg",
-      "image340.jpeg",
-      "image341.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image339.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image340.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image341.jpg"
     ]
   },
   {
@@ -5676,9 +5676,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image342.jpeg",
-      "image343.jpeg",
-      "image344.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image342.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image343.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image344.jpg"
     ]
   },
   {
@@ -5695,9 +5695,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image345.jpeg",
-      "image346.jpeg",
-      "image347.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image345.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image346.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image347.jpg"
     ]
   },
   {
@@ -5712,7 +5712,7 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/28",
     "books": [],
     "docx_photos": [
-      "image348.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image348.jpg"
     ]
   },
   {
@@ -5739,8 +5739,8 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/28",
     "books": [],
     "docx_photos": [
-      "image349.jpeg",
-      "image350.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image349.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image350.jpg"
     ]
   },
   {
@@ -5757,9 +5757,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/28",
     "books": [],
     "docx_photos": [
-      "image354.jpeg",
-      "image355.jpeg",
-      "image356.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image354.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image355.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image356.jpg"
     ]
   },
   {
@@ -5772,9 +5772,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image351.jpeg",
-      "image352.jpeg",
-      "image353.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image351.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image352.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image353.jpg"
     ]
   },
   {
@@ -5787,7 +5787,7 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image357.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image357.jpg"
     ]
   },
   {
@@ -5804,9 +5804,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/28",
     "books": [],
     "docx_photos": [
-      "image358.jpeg",
-      "image359.jpeg",
-      "image360.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image358.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image359.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image360.jpg"
     ]
   },
   {
@@ -5823,9 +5823,9 @@ const LIBRARIES_DATA = [
     "photo_date": "2025/09/27",
     "books": [],
     "docx_photos": [
-      "image361.jpeg",
-      "image362.jpeg",
-      "image363.png"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image361.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image362.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image363.jpg"
     ]
   },
   {
@@ -5842,9 +5842,9 @@ const LIBRARIES_DATA = [
     "photo_date": "",
     "books": [],
     "docx_photos": [
-      "image364.jpeg",
-      "image365.jpeg",
-      "image366.jpeg"
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image364.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image365.jpg",
+      "https://raw.githubusercontent.com/daddycoolix/librarytor-photos/main/image366.jpg"
     ]
   }
 ];

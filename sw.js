@@ -1,4 +1,4 @@
-const CACHE='street-libs-v12';
+const CACHE='street-libs-v36';
 const ASSETS=['./','/index.html','/manifest.json'];
 
 self.addEventListener('install',e=>{
@@ -12,7 +12,16 @@ self.addEventListener('activate',e=>{
 });
 
 self.addEventListener('fetch',e=>{
+  // תמיד בדוק מהרשת קודם, cache רק כגיבוי
   e.respondWith(
-    caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('/index.html')))
+    fetch(e.request)
+      .then(r => {
+        if (r && r.status === 200) {
+          const clone = r.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+        }
+        return r;
+      })
+      .catch(() => caches.match(e.request))
   );
 });
