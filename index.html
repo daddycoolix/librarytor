@@ -23,8 +23,8 @@
 }
 html,body{height:100%;overflow:hidden;background:#1B4D33;}
 body{font-family:'Heebo',sans-serif;direction:rtl;color:var(--text);}
-.app{max-width:430px;margin:0 auto;background:var(--surface);height:100vh;display:flex;flex-direction:column;overflow:hidden;}
-.status-bar{background:var(--primary-dark);color:white;display:flex;justify-content:space-between;align-items:center;padding:env(safe-area-inset-top,8px) 16px 6px;font-size:11px;min-height:28px;}
+.app{max-width:430px;margin:0 auto;background:var(--surface);height:100vh;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+.status-bar{display:none;}
 .top-bar{background:var(--primary);color:white;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .app-logo{width:34px;height:34px;background:rgba(255,255,255,0.2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .top-bar-title{flex:1;}
@@ -34,8 +34,8 @@ body{font-family:'Heebo',sans-serif;direction:rtl;color:var(--text);}
 .gps-dot{width:6px;height:6px;border-radius:50%;background:#9ca3af;transition:background 0.3s;}
 .gps-dot.active{background:#4ade80;animation:pulse 1.5s infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
-.screens{flex:1;overflow:hidden;position:relative;}
-.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:none;-webkit-overflow-scrolling:touch;background:var(--bg);}.screen-flex.active{display:flex!important;flex-direction:column;}
+.screens{flex:1;overflow:hidden;position:relative;padding-bottom:90px;}
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:none;-webkit-overflow-scrolling:touch;background:var(--bg);padding-bottom:90px;}.screen-flex.active{display:flex!important;flex-direction:column;}
 .screen.active{display:block;}
 
 /* MAP SCREEN */
@@ -173,11 +173,8 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
 .empty-state p{font-size:14px;line-height:1.8;}
 
 /* BOTTOM NAV */
-.bottom-nav{background:var(--surface);border-top:1px solid var(--border);display:flex;padding:8px 8px env(safe-area-inset-bottom,10px);gap:8px;flex-shrink:0;z-index:10;}
-.bnav{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 4px 8px;cursor:pointer;font-size:10px;font-weight:700;color:var(--text-muted);border:none;border-radius:14px;font-family:'Heebo',sans-serif;transition:all 0.18s;
-  background:linear-gradient(145deg,#f0f0f0,#d8d8d8);
-  box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);
-  min-height:64px;line-height:1.25;text-align:center;}
+.bottom-nav{background:var(--surface);border-top:1px solid var(--border);display:flex;padding:8px 8px env(safe-area-inset-bottom,10px);gap:8px;flex-shrink:0;z-index:1000;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;}
+.bnav{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 4px 8px;cursor:pointer;font-size:10px;font-weight:700;color:var(--text-muted);border:none;border-radius:14px;font-family:'Heebo',sans-serif;transition:all 0.18s;background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);min-height:64px;line-height:1.25;text-align:center;}
 .bnav:active{box-shadow:1px 1px 3px rgba(0,0,0,0.2),-1px -1px 2px rgba(255,255,255,0.7);transform:scale(0.96);}
 .bnav.on{color:var(--primary);background:linear-gradient(145deg,#d4ead9,#b8d9bf);box-shadow:3px 3px 7px rgba(0,0,0,0.15),-2px -2px 5px rgba(255,255,255,0.9),inset 0 0 0 1.5px rgba(46,125,82,0.3);}
 .bnav-icon{font-size:24px;line-height:1;display:block;}
@@ -224,9 +221,9 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
   </div>
   <div class="top-bar">
     <div class="app-logo" id="app-logo" ontouchstart="startAdminPress()" ontouchend="cancelAdminPress()" onmousedown="startAdminPress()" onmouseup="cancelAdminPress()" style="cursor:pointer;user-select:none;">📚</div>
-    <div class="top-bar-title">
-      <h1>Librarytor</h1>
-      <p>הפרויקט הארצי לספריות קהילתיות</p>
+    <div class="top-bar-title" style="display:flex;align-items:center;gap:8px;flex:1;">
+      <h1 style="font-size:16px;font-weight:700;">Librarytor</h1>
+      <span style="font-size:11px;opacity:0.75;font-weight:400;">הפרויקט הארצי לספריות קהילתיות</span>
     </div>
     <div class="gps-badge" onclick="requestGPS()">
       <div class="gps-dot" id="gps-dot"></div>
@@ -252,6 +249,23 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
         <div id="quick-book-results" style="display:none;background:var(--surface);border-bottom:1px solid var(--border);max-height:240px;overflow-y:auto;"></div>
         <div style="display:flex;gap:6px;padding:0 14px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;" id="city-filters"></div>
       </div>
+      <!-- כפתורי פעולה ראשיים -->
+      <div style="display:flex;gap:8px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);">
+        <button onclick="goTo('map')" id="top-bn-map" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--primary);background:linear-gradient(145deg,#d4ead9,#b8d9bf);box-shadow:3px 3px 7px rgba(0,0,0,0.15),-2px -2px 5px rgba(255,255,255,0.9);">
+          <span style="font-size:22px;">🗺️</span><span>כל<br>הספריות</span>
+        </button>
+        <label style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
+          <span style="font-size:22px;">🖼️</span><span>קליטה<br>מתמונות</span>
+          <input type="file" accept="image/*" multiple style="display:none;" onchange="handlePhotoUploadGlobal(event)">
+        </label>
+        <button onclick="goTo('camera')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
+          <span style="font-size:22px;">📷</span><span>סריקה<br>חיה</span>
+        </button>
+        <button onclick="goTo('search')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
+          <span style="font-size:22px;">🔍</span><span>חיפוש<br>ספר</span>
+        </button>
+      </div>
+
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
@@ -395,7 +409,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
 
   </div>
 
-  <nav class="bottom-nav">
+  <nav class="bottom-nav" style="display:none!important;">
     <button class="bnav on" id="bn-map" onclick="goTo('map')">
       <span class="bnav-icon">🗺️</span>
       <span class="bnav-label">כל<br>הספריות</span>
@@ -6329,10 +6343,23 @@ function getBooksForLib(libId) {
   const key = String(libId);
   const real = (typeof BOOKS_DATA !== 'undefined' && BOOKS_DATA[key]) ? BOOKS_DATA[key] : [];
   const user = booksDB[key] || booksDB[libId] || [];
-  const firebase = firebaseBooks[key] || [];
-  // Merge, avoid duplicates
-  const allUser = [...user, ...firebase.filter(fb => !user.find(u => u.title === fb.title))];
-  return [...real, ...allUser];
+  const fb = firebaseBooks[key] || [];
+  // מיזוג - Firebase קודם, אחר כך local שלא קיים
+  const merged = [...fb];
+  user.forEach(u => {
+    if (!merged.find(f => f.title.trim().toLowerCase() === u.title.trim().toLowerCase())) merged.push(u);
+  });
+  // הסר כפילויות - שמור רק האחרון
+  const seen = new Set();
+  const deduped = merged
+    .sort((a,b) => (b.timestamp||0) - (a.timestamp||0))
+    .filter(b => {
+      const k = (b.title||'').trim().toLowerCase();
+      if (seen.has(k)) return false;
+      seen.add(k); return true;
+    });
+  // ספרים שנוספו (חדשים) לפני הספרים הישנים מהמאגר
+  return [...deduped, ...real.filter(r => !seen.has(r.title.trim().toLowerCase()))];
 }
 
 function findBookInLibraries(title, excludeLibId) {
@@ -6512,7 +6539,14 @@ function openLib(id) {
 function renderBooks() {
   const q = (document.getElementById('lib-q').value || '').toLowerCase();
   const allBooks = getBooksForLib(curLib);
-  const books = allBooks
+  // מיון: ספרים עם recent (חדשים) קודם, אחר כך לפי תאריך
+  const sortedBooks = [...allBooks].sort((a, b) => {
+    if (a.recent && !b.recent) return -1;
+    if (!a.recent && b.recent) return 1;
+    if (a.timestamp && b.timestamp) return b.timestamp - a.timestamp;
+    return 0;
+  });
+  const books = sortedBooks
     .filter(b => curFilter === 'recent' ? b.recent : true)
     .filter(b => !q || b.title.toLowerCase().includes(q) || (b.author && b.author.toLowerCase().includes(q)));
 
@@ -6908,7 +6942,9 @@ window.saveScanBooks = function() {
     if (cb && !cb.checked) return;
     if (!booksDB[key].find(x => x.title === b.title)) {
       const nb = { title: b.title, author: b.author || '', date: today, recent: true };
-      booksDB[key].push(nb);
+      // הסר עותקים ישנים של אותו ספר - שומר רק את האחרון
+      booksDB[key] = (booksDB[key] || []).filter(x => x.title.trim().toLowerCase() !== nb.title.trim().toLowerCase());
+      booksDB[key].unshift(nb); // ספרים חדשים למעלה
       if (typeof saveBookToFirebase === 'function') saveBookToFirebase(key, nb);
       added++;
     }
@@ -7035,7 +7071,7 @@ function showBookManager() {
             <div style="font-size:11px;color:var(--text-muted);">${b.author||''} ${b.date ? '· ' + b.date : ''}</div>
             <div style="font-size:10px;color:${b._src==='firebase'?'#2E7D52':'#6B6B6B'};">${b._src==='firebase'?'☁️ משותף לכולם':'💾 מקומי'}</div>
           </div>
-          <button onclick="removeBook(${i}, ${b._src==='firebase'}, '${b.fbKey||''}')" style="background:#fee2e2;color:#b91c1c;border:none;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:Heebo,sans-serif;">הסר</button>
+          ${adminAuthenticated ? `<button onclick="removeBook(${i}, ${b._src==='firebase'}, '${b.fbKey||''}')" style="background:#fee2e2;color:#b91c1c;border:none;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:Heebo,sans-serif;">הסר</button>` : ''}
         </div>`).join('');
   }
 
@@ -7085,7 +7121,7 @@ function showBookManager() {
       date: now.toLocaleDateString('he-IL'),
       recent: true
     };
-    booksDB[key].push(newBook);
+    booksDB[key].unshift(newBook); // ספרים חדשים למעלה
     try { localStorage.setItem('librarytor_books', JSON.stringify(booksDB)); } catch(e){}
     // Save to Firebase for all users
     if (typeof saveBookToFirebase === 'function') saveBookToFirebase(key, newBook);
@@ -7227,7 +7263,15 @@ function loadBooksFromFirebase() {
     const data = snapshot.val();
     if (data) {
       Object.entries(data).forEach(([libId, books]) => {
-        firebaseBooks[libId] = Object.values(books);
+        // מיין לפי timestamp - חדש ראשון, הסר כפילויות
+        const arr = Object.values(books).sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
+        const seen = new Set();
+        firebaseBooks[libId] = arr.filter(b => {
+          const k = (b.title||'').trim().toLowerCase();
+          if (seen.has(k)) return false;
+          seen.add(k);
+          return true;
+        });
       });
       renderLibCards();
       if (curLib !== null) renderBooks();
@@ -8073,7 +8117,9 @@ async function confirmBookRecognition() {
     const cb = document.getElementById(`cb-recog-${i}`) || document.getElementById(`book-cb-${i}`);
     if (cb && cb.checked && b.title && !booksDB[key].find(x => x.title === b.title)) {
       const newBook = { title: b.title, author: b.author || '', date: today, recent: true };
-      booksDB[key].push(newBook);
+      // הסר עותקים ישנים - שומר רק את האחרון
+      booksDB[key] = (booksDB[key] || []).filter(x => x.title.trim().toLowerCase() !== newBook.title.trim().toLowerCase());
+      booksDB[key].unshift(newBook); // ספרים חדשים למעלה
       if (typeof saveBookToFirebase === 'function') saveBookToFirebase(key, newBook);
       added++;
     }
