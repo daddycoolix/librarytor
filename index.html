@@ -251,24 +251,25 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       </div>
       <!-- כפתורי פעולה ראשיים -->
       <div style="display:flex;gap:8px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);">
-        <button onclick="goTo('map')" id="top-bn-map" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--primary);background:linear-gradient(145deg,#d4ead9,#b8d9bf);box-shadow:3px 3px 7px rgba(0,0,0,0.15),-2px -2px 5px rgba(255,255,255,0.9);">
-          <span style="font-size:22px;">🗺️</span><span>כל<br>הספריות</span>
+        <button onclick="goTo('map')" id="top-bn-map" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 10px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--primary);background:linear-gradient(145deg,#d4ead9,#b8d9bf);box-shadow:3px 3px 7px rgba(0,0,0,0.15),-2px -2px 5px rgba(255,255,255,0.9);">
+          <span style="font-size:38px;line-height:1.05;">🗺️</span><span>כל<br>הספריות</span>
         </button>
-        <label style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
-          <span style="font-size:22px;">🖼️</span><span>קליטה<br>מתמונות</span>
+        <label style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 10px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
+          <span style="font-size:38px;line-height:1.05;">🖼️</span><span>קליטה<br>מתמונות</span>
           <input type="file" accept="image/*" multiple style="display:none;" onchange="handlePhotoUploadGlobal(event)">
         </label>
-        <button onclick="goTo('camera')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
-          <span style="font-size:22px;">📷</span><span>סריקה<br>חיה</span>
+        <button onclick="goTo('camera')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 10px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
+          <span style="font-size:38px;line-height:1.05;">📷</span><span>סריקה<br>חיה</span>
         </button>
-        <button onclick="goTo('search')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
-          <span style="font-size:22px;">🔍</span><span>חיפוש<br>ספר</span>
+        <button onclick="goTo('search')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 10px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
+          <span style="font-size:38px;line-height:1.05;">🔍</span><span>חיפוש<br>ספר</span>
         </button>
       </div>
 
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">v44</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -6863,19 +6864,21 @@ async function processImageForBooks(dataUrl, file, lat, lng) {
     const compressed = await compressImage(dataUrl, 1600);
 
     // שלח ל-3 חלקים
-    const slices = await sliceImage(compressed, 3);
+    const slices = await sliceImage(compressed, 5);
     const allBooks = [];
     const seen = new Set();
 
     document.getElementById('found-books').innerHTML = '<div style="padding:16px;text-align:center;color:rgba(255,255,255,0.7);">מנתח חלק 1 מתוך 3...</div>';
     for (let i = 0; i < slices.length; i++) {
-      if (i > 0) document.getElementById('found-books').innerHTML = `<div style="padding:16px;text-align:center;color:rgba(255,255,255,0.7);">מנתח חלק ${i+1} מתוך 3...</div>`;
-      const books = await sendToWorker(slices[i]);
-      for (const b of books) {
+      document.getElementById('found-books').innerHTML = `<div style="padding:16px;text-align:center;color:rgba(255,255,255,0.7);">מנתח חלק ${i+1} מתוך ${slices.length}...</div>`;
+      // שלח כל חלק פעמיים עם הנחיות שונות
+      const results1 = await sendToWorker(slices[i], 0);
+      const results2 = await sendToWorker(slices[i], 1);
+      for (const b of [...results1, ...results2]) {
         if (!b.title) continue;
-        if (!isHebrew(b.title)) continue; // סנן לא עברי
+        if (!isHebrew(b.title)) continue;
         if (b.author && b.author.trim() && !isHebrew(b.author)) b.author = '';
-        const key = b.title.trim().toLowerCase();
+        const key = b.title.trim().replace(/['"״]/g,'').toLowerCase();
         if (!seen.has(key)) { seen.add(key); allBooks.push(b); }
       }
     }
@@ -7546,18 +7549,17 @@ async function analyzeMultipleImages(fileDataList, lat, lng) {
 
     try {
       const compressed = await compressImage(dataUrl, 1800);
-      const slices = await sliceImage(compressed, 3);
+      const slices = await sliceImage(compressed, 5);
 
-      // כל חלק - זיהוי מלא עם סינון עברית
-      for (const slice of slices) {
-        const books = await sendToWorker(slice);
-        for (const b of books) {
+      // כל חלק - זיהוי כפול עם הנחיות שונות לשיפור דיוק
+      for (let si = 0; si < slices.length; si++) {
+        const results1 = await sendToWorker(slices[si], 0);
+        const results2 = await sendToWorker(slices[si], 1);
+        for (const b of [...results1, ...results2]) {
           if (!b.title) continue;
-          // סנן ספרים לא עבריים
           if (!isHebrew(b.title)) continue;
-          // סנן מחבר לא עברי (אם יש)
           if (b.author && b.author.trim() && !isHebrew(b.author)) b.author = '';
-          const key = b.title.trim().replace(/\s+/g,' ').toLowerCase();
+          const key = b.title.trim().replace(/['"״]/g,'').replace(/\s+/g,' ').toLowerCase();
           if (!seen.has(key)) { seen.add(key); allBooks.push(b); }
         }
       }
@@ -7777,15 +7779,18 @@ async function sliceImage(dataUrl, parts) {
     const img = new Image();
     img.onload = () => {
       const slices = [];
-      const sliceH = Math.floor(img.height / parts);
+      // חלוקה עם 15% חפיפה בין חלקים - כדי לא לחתוך ספרים
+      const overlap = 0.15;
+      const step = img.height / parts;
       for (let i = 0; i < parts; i++) {
         const canvas = document.createElement('canvas');
-        const y = i * sliceH;
-        const h = (i === parts - 1) ? img.height - y : sliceH;
+        const y = Math.max(0, Math.floor(i * step - (i > 0 ? step * overlap : 0)));
+        const bottom = Math.min(img.height, Math.ceil((i + 1) * step + (i < parts-1 ? step * overlap : 0)));
+        const h = bottom - y;
         canvas.width = img.width;
         canvas.height = h;
         canvas.getContext('2d').drawImage(img, 0, y, img.width, h, 0, 0, img.width, h);
-        slices.push(canvas.toDataURL('image/jpeg', 0.85).split(',')[1]);
+        slices.push(canvas.toDataURL('image/jpeg', 0.88).split(',')[1]);
       }
       resolve(slices);
     };
@@ -7793,24 +7798,27 @@ async function sliceImage(dataUrl, parts) {
   });
 }
 
-async function sendToWorker(base64) {
-  const response = await fetch('https://librarytor-ai.daddycoolix.workers.dev', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      image: base64,
-      instruction: 'זהה רק ספרים שכותרתם בעברית ומחברם בעברית. התעלם לחלוטין מספרים באנגלית או בשפות אחרות. החזר רק ספרים עם שם בעברית ושם מחבר בעברית.'
-    })
-  });
-  const data = await response.json();
-  // סנן - רק ספרים עם שם עברי (לפחות 50% תווים עבריים)
-  const books = data.books || [];
-  return books.filter(b => {
-    if (!b.title) return false;
-    const hebrewChars = (b.title.match(/[א-ת]/g) || []).length;
-    const total = b.title.replace(/\s/g, '').length;
-    return total > 0 && hebrewChars / total >= 0.5;
-  });
+async function sendToWorker(base64, attempt) {
+  const instructions = [
+    `אתה מומחה לזיהוי ספרים עבריים מגבות ספרים בתמונה. קרא את שמות הספרים והמחברים בדיוק כפי שכתוב. זהה כל ספר שגבו נראה בתמונה, גם אם חלקי. החזר JSON בלבד: {"books": [{"title": "שם הספר", "author": "שם המחבר", "conf": 90}]}. כלול רק ספרים עם שם בעברית. אל תמציא ספרים.`,
+    `תפקידך: לקרוא כיתוב על גבי ספרים בתמונה. הספרים בערימה או במדף. גב כל ספר מכיל שם ספר ולרוב שם מחבר. קרא בזהירות - שמות עלולים להיות בזוויות. החזר JSON: {"books": [{"title": "...", "author": "...", "conf": 85}]}. כלול גם ספרים שאתה פחות בטוח בהם.`
+  ];
+  const instruction = instructions[(attempt || 0) % instructions.length];
+  try {
+    const response = await fetch('https://librarytor-ai.daddycoolix.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image: base64, instruction })
+    });
+    const data = await response.json();
+    const books = data.books || [];
+    return books.filter(b => {
+      if (!b.title || b.title.trim().length < 2) return false;
+      const hebrewChars = (b.title.match(/[א-ת]/g) || []).length;
+      const total = b.title.replace(/\s/g, '').length;
+      return total > 0 && hebrewChars / total >= 0.45;
+    });
+  } catch(e) { return []; }
 }
 
 // בדוק אם מחרוזת היא עברית
@@ -7839,18 +7847,24 @@ function strSimilarity(a, b) {
 // חיפוש ב-Open Library (תומך עברית)
 async function searchOpenLibrary(title, author) {
   try {
-    const q = encodeURIComponent(title + (author ? ' ' + author : ''));
-    const res = await fetch(`https://openlibrary.org/search.json?q=${q}&limit=5&fields=title,author_name`);
-    const data = await res.json();
-    if (!data.docs || !data.docs.length) return null;
-    for (const doc of data.docs) {
-      const sim = strSimilarity(title, doc.title || '');
-      if (sim > 0.55) {
-        return {
-          title: doc.title || title,
-          author: (doc.author_name && doc.author_name[0]) || author || '',
-          source: 'Open Library'
-        };
+    // נסה גם חיפוש בעברית וגם עם שם מחבר
+    const queries = [
+      title + (author ? ' ' + author : ''),
+      title
+    ];
+    for (const q of queries) {
+      const res = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&limit=8&fields=title,author_name,language`);
+      const data = await res.json();
+      if (!data.docs || !data.docs.length) continue;
+      for (const doc of data.docs) {
+        const sim = strSimilarity(title, doc.title || '');
+        if (sim > 0.5) {
+          return {
+            title: doc.title || title,
+            author: (doc.author_name && doc.author_name[0]) || author || '',
+            source: 'Open Library'
+          };
+        }
       }
     }
     return null;
@@ -7917,6 +7931,16 @@ async function searchWithVariants(title, author) {
     if (result) return result;
   }
 
+  // ניסיון 5 - חיפוש פונטי (החלפת אותיות דומות)
+  const phonetic = title
+    .replace(/וי/g, 'ו').replace(/אי/g, 'י')
+    .replace(/צ'/g, 'צ').replace(/ג'/g, 'ג')
+    .replace(/ק'/g, 'ק').replace(/ש'/g, 'ש');
+  if (phonetic !== title) {
+    result = await searchOneBook(phonetic, author);
+    if (result) return result;
+  }
+
   return null;
 }
 
@@ -7937,7 +7961,14 @@ async function verifyWithGoogleBooks(books, statusElId) {
     batch.forEach((book, idx) => {
       const info = batchResults[idx];
       if (info) {
-        results.push({ title: info.title || book.title, author: info.author || book.author || '', matched: true, source: info.source });
+        // השתמש בשם מהאינטרנט אם הוא בעברית ודומה מספיק לשם המקורי
+        const useInternetTitle = info.title && isHebrew(info.title) && strSimilarity(book.title, info.title) > 0.4;
+        results.push({
+          title: useInternetTitle ? info.title : book.title,
+          author: (info.author && isHebrew(info.author)) ? info.author : (book.author || ''),
+          matched: true,
+          source: info.source
+        });
       } else {
         unmatched.push({ ...book, _origIdx: results.length + unmatched.length });
         results.push(null); // placeholder
@@ -8033,8 +8064,9 @@ function renderBooksList(books, containerId, wrapperEl) {
           <input type="checkbox" id="cb-${containerId}-${i}" ${isChecked}
             style="width:18px;height:18px;accent-color:var(--primary, #4ade80);flex-shrink:0;cursor:pointer;">
           <div style="flex:1;min-width:0;">
-            <div style="font-size:13px;font-weight:700;color:${titleColor};">${b.title}</div>
-            ${b.author ? `<div style="font-size:11px;color:var(--text-muted, #888);">${b.author}</div>` : ''}
+            <div style="font-size:12px;font-weight:700;color:${titleColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+              ${b.title}${b.author ? `<span style="font-weight:400;color:var(--text-muted,#888);font-size:11px;"> / ${b.author}</span>` : ''}
+            </div>
             ${b.matched
               ? `<div style="font-size:10px;color:#2E7D52;">✓ אומת - ${b.source || ''}</div>`
               : `<div class="book-no-match" style="font-size:10px;color:#ef4444;">לא אומת - לחץ 🔴 לניסיון נוסף</div>`}
@@ -8054,7 +8086,7 @@ async function analyzeImageWithClaude(dataUrl, mediaType, lat, lng) {
     const compressed = await compressImage(dataUrl, 1600);
 
     // חתוך ל-3 חלקים ושלח כל אחד בנפרד
-    const slices = await sliceImage(compressed, 3);
+    const slices = await sliceImage(compressed, 5);
     
     const allBooks = [];
     const seen = new Set();
