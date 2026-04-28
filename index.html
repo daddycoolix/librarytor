@@ -7823,9 +7823,9 @@ async function sendToWorker(base64) {
       return { title, author, conf: b.conf || 80 };
     }).filter(b => {
       if (!b.title || b.title.trim().length < 2) return false;
+      // קבל כל ספר שיש בו לפחות תו עברי אחד
       const hebrewChars = (b.title.match(/[א-ת]/g) || []).length;
-      const total = b.title.replace(/\s/g, '').length;
-      return total > 0 && hebrewChars / total >= 0.4;
+      return hebrewChars >= 1;
     });
   } catch(e) { return []; }
 }
@@ -7833,9 +7833,9 @@ async function sendToWorker(base64) {
 // בדוק אם מחרוזת היא עברית
 function isHebrew(str) {
   if (!str) return false;
+  // מספיק תו עברי אחד - Gemini כבר מסנן אנגלית
   const heb = (str.match(/[א-ת]/g) || []).length;
-  const total = str.replace(/\s/g,'').length;
-  return total > 0 && heb / total >= 0.4;
+  return heb >= 1;
 }
 
 // ===== מנגנון אימות ספרים משופר - שני שלבים + לחיצה על אדום =====
