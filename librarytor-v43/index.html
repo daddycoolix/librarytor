@@ -251,18 +251,18 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       </div>
       <!-- כפתורי פעולה ראשיים -->
       <div style="display:flex;gap:8px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);">
-        <button onclick="goTo('map')" id="top-bn-map" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--primary);background:linear-gradient(145deg,#d4ead9,#b8d9bf);box-shadow:3px 3px 7px rgba(0,0,0,0.15),-2px -2px 5px rgba(255,255,255,0.9);">
-          <span style="font-size:22px;">🗺️</span><span>כל<br>הספריות</span>
+        <button onclick="goTo('map')" id="top-bn-map" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 10px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--primary);background:linear-gradient(145deg,#d4ead9,#b8d9bf);box-shadow:3px 3px 7px rgba(0,0,0,0.15),-2px -2px 5px rgba(255,255,255,0.9);">
+          <span style="font-size:34px;line-height:1;">🗺️</span><span>כל<br>הספריות</span>
         </button>
-        <label style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
-          <span style="font-size:22px;">🖼️</span><span>קליטה<br>מתמונות</span>
+        <label style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 10px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
+          <span style="font-size:34px;line-height:1;">🖼️</span><span>קליטה<br>מתמונות</span>
           <input type="file" accept="image/*" multiple style="display:none;" onchange="handlePhotoUploadGlobal(event)">
         </label>
-        <button onclick="goTo('camera')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
-          <span style="font-size:22px;">📷</span><span>סריקה<br>חיה</span>
+        <button onclick="goTo('camera')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 10px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
+          <span style="font-size:34px;line-height:1;">📷</span><span>סריקה<br>חיה</span>
         </button>
-        <button onclick="goTo('search')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
-          <span style="font-size:22px;">🔍</span><span>חיפוש<br>ספר</span>
+        <button onclick="goTo('search')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 10px;border:none;border-radius:12px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700;font-size:9.5px;color:var(--text-muted);background:linear-gradient(145deg,#f0f0f0,#d8d8d8);box-shadow:3px 3px 7px rgba(0,0,0,0.18),-2px -2px 5px rgba(255,255,255,0.85);">
+          <span style="font-size:34px;line-height:1;">🔍</span><span>חיפוש<br>ספר</span>
         </button>
       </div>
 
@@ -271,6 +271,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
         <div style="display:flex;gap:6px;align-items:center;">
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
+          <span style="font-size:10px;color:var(--text-muted);background:#f0f0f0;padding:2px 7px;border-radius:8px;font-weight:600;letter-spacing:0.3px;">v43</span>
         </div>
       </div>
       <div class="lib-cards" id="lib-cards"></div>
@@ -6863,7 +6864,7 @@ async function processImageForBooks(dataUrl, file, lat, lng) {
     const compressed = await compressImage(dataUrl, 1600);
 
     // שלח ל-3 חלקים
-    const slices = await sliceImage(compressed, 3);
+    const slices = await sliceImage(compressed, 5);
     const allBooks = [];
     const seen = new Set();
 
@@ -7546,7 +7547,7 @@ async function analyzeMultipleImages(fileDataList, lat, lng) {
 
     try {
       const compressed = await compressImage(dataUrl, 1800);
-      const slices = await sliceImage(compressed, 3);
+      const slices = await sliceImage(compressed, 5);
 
       // כל חלק - זיהוי מלא עם סינון עברית
       for (const slice of slices) {
@@ -7777,15 +7778,18 @@ async function sliceImage(dataUrl, parts) {
     const img = new Image();
     img.onload = () => {
       const slices = [];
-      const sliceH = Math.floor(img.height / parts);
+      // חלוקה עם 15% חפיפה בין חלקים - כדי לא לחתוך ספרים
+      const overlap = 0.15;
+      const step = img.height / parts;
       for (let i = 0; i < parts; i++) {
         const canvas = document.createElement('canvas');
-        const y = i * sliceH;
-        const h = (i === parts - 1) ? img.height - y : sliceH;
+        const y = Math.max(0, Math.floor(i * step - (i > 0 ? step * overlap : 0)));
+        const bottom = Math.min(img.height, Math.ceil((i + 1) * step + (i < parts-1 ? step * overlap : 0)));
+        const h = bottom - y;
         canvas.width = img.width;
         canvas.height = h;
         canvas.getContext('2d').drawImage(img, 0, y, img.width, h, 0, 0, img.width, h);
-        slices.push(canvas.toDataURL('image/jpeg', 0.85).split(',')[1]);
+        slices.push(canvas.toDataURL('image/jpeg', 0.88).split(',')[1]);
       }
       resolve(slices);
     };
@@ -7799,7 +7803,15 @@ async function sendToWorker(base64) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       image: base64,
-      instruction: 'זהה רק ספרים שכותרתם בעברית ומחברם בעברית. התעלם לחלוטין מספרים באנגלית או בשפות אחרות. החזר רק ספרים עם שם בעברית ושם מחבר בעברית.'
+      instruction: `אתה מומחה לזיהוי ספרים עבריים מצילום גבות ספרים.
+כללים קפדניים:
+1. זהה רק ספרים שאתה רואה בבירור בתמונה - אל תמציא ספרים שלא קיימים בתמונה.
+2. קרא בדיוק את הכיתוב על גב הספר - אל תשנה שמות.
+3. החזר רק ספרים עם שם בעברית (50%+ תווים עבריים).
+4. אם אתה לא בטוח בשם - דלג על הספר, עדיף פחות ספרים מדויקים מאשר יותר שגויים.
+5. שם המחבר: קרא אותו בדיוק מהגב - בדרך כלל רשום לפני שם הספר או אחריו.
+6. אל תכלול ספרים שגבם לא גלוי בתמונה.
+החזר JSON: {books: [{title, author, conf}]}`
     })
   });
   const data = await response.json();
@@ -7917,6 +7929,16 @@ async function searchWithVariants(title, author) {
     if (result) return result;
   }
 
+  // ניסיון 5 - חיפוש פונטי (החלפת אותיות דומות)
+  const phonetic = title
+    .replace(/וי/g, 'ו').replace(/אי/g, 'י')
+    .replace(/צ'/g, 'צ').replace(/ג'/g, 'ג')
+    .replace(/ק'/g, 'ק').replace(/ש'/g, 'ש');
+  if (phonetic !== title) {
+    result = await searchOneBook(phonetic, author);
+    if (result) return result;
+  }
+
   return null;
 }
 
@@ -7937,7 +7959,14 @@ async function verifyWithGoogleBooks(books, statusElId) {
     batch.forEach((book, idx) => {
       const info = batchResults[idx];
       if (info) {
-        results.push({ title: info.title || book.title, author: info.author || book.author || '', matched: true, source: info.source });
+        // השתמש בשם מהאינטרנט אם הוא בעברית ודומה מספיק לשם המקורי
+        const useInternetTitle = info.title && isHebrew(info.title) && strSimilarity(book.title, info.title) > 0.4;
+        results.push({
+          title: useInternetTitle ? info.title : book.title,
+          author: (info.author && isHebrew(info.author)) ? info.author : (book.author || ''),
+          matched: true,
+          source: info.source
+        });
       } else {
         unmatched.push({ ...book, _origIdx: results.length + unmatched.length });
         results.push(null); // placeholder
@@ -8033,8 +8062,9 @@ function renderBooksList(books, containerId, wrapperEl) {
           <input type="checkbox" id="cb-${containerId}-${i}" ${isChecked}
             style="width:18px;height:18px;accent-color:var(--primary, #4ade80);flex-shrink:0;cursor:pointer;">
           <div style="flex:1;min-width:0;">
-            <div style="font-size:13px;font-weight:700;color:${titleColor};">${b.title}</div>
-            ${b.author ? `<div style="font-size:11px;color:var(--text-muted, #888);">${b.author}</div>` : ''}
+            <div style="font-size:12px;font-weight:700;color:${titleColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+              ${b.title}${b.author ? `<span style="font-weight:400;color:var(--text-muted,#888);font-size:11px;"> / ${b.author}</span>` : ''}
+            </div>
             ${b.matched
               ? `<div style="font-size:10px;color:#2E7D52;">✓ אומת - ${b.source || ''}</div>`
               : `<div class="book-no-match" style="font-size:10px;color:#ef4444;">לא אומת - לחץ 🔴 לניסיון נוסף</div>`}
@@ -8054,7 +8084,7 @@ async function analyzeImageWithClaude(dataUrl, mediaType, lat, lng) {
     const compressed = await compressImage(dataUrl, 1600);
 
     // חתוך ל-3 חלקים ושלח כל אחד בנפרד
-    const slices = await sliceImage(compressed, 3);
+    const slices = await sliceImage(compressed, 5);
     
     const allBooks = [];
     const seen = new Set();
