@@ -266,10 +266,13 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
         </button>
       </div>
 
+      <div style="padding:8px 14px 4px;font-size:11px;color:var(--text-muted);text-align:center;">
+        לחץ על ספריה כדי לראות את ספריה, לצלם ולהוסיף ספרים
+      </div>
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
-          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">v44</span>
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.02</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -373,7 +376,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
     <div class="screen screen-flex" id="s-recognize" style="display:none;">
       <div style="background:var(--primary-dark);color:white;padding:12px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;">
         <span onclick="goTo('detail')" style="font-size:20px;cursor:pointer;">&#8592;</span>
-        <span style="font-size:15px;font-weight:700;flex:1;">🖼️ זיהוי ספרים מתמונה</span>
+        <span style="font-size:15px;font-weight:700;flex:1;">📖 זיהוי ספרים מתמונה</span>
         <span id="recog-lib-tag" style="font-size:10px;background:rgba(255,255,255,0.2);padding:3px 8px;border-radius:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
       </div>
       <div style="overflow-y:auto;flex:1;padding:12px 14px;">
@@ -441,12 +444,18 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
 </div>
 
 <div class="toast" id="toast"></div>
+<div id="install-banner" style="display:none;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#1B4D33;color:white;padding:12px 16px;z-index:500;align-items:center;gap:10px;font-family:Heebo,sans-serif;">
+  <span style="flex:1;font-size:13px;">📲 הוסף את Librarytor למסך הבית לגישה מהירה</span>
+  <button onclick="installApp()" style="padding:7px 14px;background:white;color:#1B4D33;border:none;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:Heebo,sans-serif;white-space:nowrap;">הוסף</button>
+  <button onclick="dismissInstall()" style="padding:7px;background:none;border:none;color:rgba(255,255,255,0.7);font-size:18px;cursor:pointer;">✕</button>
+</div>
 <div class="modal-overlay" id="gps-modal" onclick="closeModal()">
   <div class="modal-sheet" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
-    <div class="modal-title">📍 אפשר גישה למיקום</div>
-    <div class="modal-body">Librarytor צריכה גישה למיקומך כדי למיין ספריות לפי מרחק ולתעד את מיקום הסריקה.</div>
-    <button class="modal-btn" onclick="enableGPS()">📍 אפשר גישה למיקום</button>
+    <div class="modal-title">📍 מיין ספריות לפי מרחק ממך</div>
+    <div class="modal-body">רוצה לראות אילו ספריות הכי קרובות אליך? לחץ "כן" ואנחנו נמיין אותן לפי מרחק.</div>
+    <button class="modal-btn" onclick="enableGPS()">📍 כן, מיין לפי מרחק</button>
+    <button onclick="closeModal()" style="width:100%;padding:11px;background:none;border:none;color:var(--text-muted);font-size:14px;cursor:pointer;font-family:Heebo,sans-serif;margin-top:8px;">לא תודה, המשך בלי מיון</button>
   </div>
 </div>
 
@@ -6329,6 +6338,15 @@ window.addEventListener('load', () => {
   buildCityFilters();
   clock(); setInterval(clock, 30000);
   if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+  // הצע להוסיף למסך הבית
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    window._installPrompt = e;
+    const banner = document.getElementById('install-banner');
+    if (banner && !localStorage.getItem('install-dismissed')) {
+      banner.style.display = 'flex';
+    }
+  });
   // Load shared books from Firebase
   setTimeout(() => { if(typeof loadBooksFromFirebase==='function') loadBooksFromFirebase(); }, 500);
   setTimeout(() => { if(typeof loadCustomLibraries==='function') loadCustomLibraries(); }, 600);
@@ -6720,7 +6738,7 @@ async function startCam() {
     camStream = stream;
     const v = document.getElementById('cam-video');
     v.srcObject = stream; v.style.display = 'block';
-    document.getElementById('cam-guide').innerHTML = '<div class="cam-guide-text">כוון לשדרת הספרים ולחץ 📷</div>';
+    document.getElementById('cam-guide').innerHTML = '<div class="cam-guide-text">כוון למדף הספרים ולחץ על הכפתור הגדול 📷</div>';
   } catch(e) {
     document.getElementById('cam-guide').innerHTML = '<div class="cam-guide-text">לחץ 🖼️ להעלאת תמונה</div>';
   }
@@ -6861,7 +6879,7 @@ async function processImageForBooks(dataUrl, file, lat, lng) {
 
   try {
     // כווץ תמונה
-    const compressed = await compressImage(dataUrl, 1600);
+    const compressed = await compressImage(dataUrl, 1200);
 
     // שלח ל-3 חלקים
     const slices = await sliceImage(compressed, 3);
@@ -7546,7 +7564,7 @@ async function analyzeMultipleImages(fileDataList, lat, lng) {
       </div>`;
 
     try {
-      const compressed = await compressImage(dataUrl, 1800);
+      const compressed = await compressImage(dataUrl, 1200);
       const slices = await sliceImage(compressed, 3);
 
       // כל חלק - זיהוי עם סינון עברית
@@ -7765,7 +7783,7 @@ async function compressImage(dataUrl, maxSize) {
       canvas.width = w;
       canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      resolve(canvas.toDataURL('image/jpeg', 0.8));
+      resolve(canvas.toDataURL('image/jpeg', 0.72));
     };
     img.src = dataUrl;
   });
@@ -7821,12 +7839,7 @@ async function sendToWorker(base64) {
         author = parts[1].trim();
       }
       return { title, author, conf: b.conf || 80 };
-    }).filter(b => {
-      if (!b.title || b.title.trim().length < 2) return false;
-      // קבל כל ספר שיש בו לפחות תו עברי אחד
-      const hebrewChars = (b.title.match(/[א-ת]/g) || []).length;
-      return hebrewChars >= 1;
-    });
+    }).filter(b => b.title && b.title.trim().length >= 2);
   } catch(e) { return []; }
 }
 
@@ -8092,7 +8105,7 @@ async function analyzeImageWithClaude(dataUrl, mediaType, lat, lng) {
       '<div style="padding:16px;text-align:center;color:var(--text-muted);">מנתח תמונה בחלקים... עשוי לקחת כ-30 שניות</div>';
 
     // כווץ תמונה ל-1600px
-    const compressed = await compressImage(dataUrl, 1600);
+    const compressed = await compressImage(dataUrl, 1200);
 
     // חתוך ל-3 חלקים ושלח כל אחד בנפרד
     const slices = await sliceImage(compressed, 3);
@@ -8174,6 +8187,21 @@ async function confirmBookRecognition() {
 }
 
 // ===== כניסת מנהל - לחיצה ארוכה על הלוגו =====
+// ===== התקנה כאפליקציה =====
+function installApp() {
+  if (window._installPrompt) {
+    window._installPrompt.prompt();
+    window._installPrompt.userChoice.then(() => {
+      document.getElementById('install-banner').style.display = 'none';
+      localStorage.setItem('install-dismissed', '1');
+    });
+  }
+}
+function dismissInstall() {
+  document.getElementById('install-banner').style.display = 'none';
+  localStorage.setItem('install-dismissed', '1');
+}
+
 let adminPressTimer = null;
 function startAdminPress() {
   adminPressTimer = setTimeout(() => {
