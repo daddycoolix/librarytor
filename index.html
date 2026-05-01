@@ -272,7 +272,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
-          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.12</span>
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.13</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -459,6 +459,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
@@ -7841,7 +7842,57 @@ async function sliceImage(dataUrl, parts) {
   });
 }
 
-async function sendToWorker(base64) {
+
+// ===== מנגנון זיהוי משולב - 3 מנועים במקביל =====
+const OCR_SPACE_KEY = 'K88989390488957';
+let _tesseractWorker = null;
+
+async function getTesseractWorker() {
+  if (_tesseractWorker) return _tesseractWorker;
+  try {
+    _tesseractWorker = await Tesseract.createWorker(['heb', 'eng'], 1, { logger: () => {} });
+    return _tesseractWorker;
+  } catch(e) { return null; }
+}
+
+async function ocrTesseract(base64) {
+  try {
+    const worker = await getTesseractWorker();
+    if (!worker) return [];
+    const { data } = await worker.recognize(`data:image/jpeg;base64,${base64}`);
+    const lines = (data.text || '').split('
+')
+      .map(l => l.trim()).filter(l => l.length > 2 && l.length < 50)
+      .filter(l => (l.match(/[א-ת]/g) || []).length >= 2);
+    return lines.map(l => ({ title: l, author: '', conf: 65, _src: 'tesseract' }));
+  } catch(e) { return []; }
+}
+
+async function ocrSpace(base64) {
+  try {
+    const formData = new FormData();
+    formData.append('base64Image', `data:image/jpeg;base64,${base64}`);
+    formData.append('language', 'heb');
+    formData.append('isOverlayRequired', 'false');
+    formData.append('detectOrientation', 'true');
+    formData.append('scale', 'true');
+    formData.append('OCREngine', '2');
+    const res = await fetch('https://api.ocr.space/parse/image', {
+      method: 'POST',
+      headers: { 'apikey': OCR_SPACE_KEY },
+      body: formData
+    });
+    const data = await res.json();
+    const text = data.ParsedResults?.[0]?.ParsedText || '';
+    const lines = text.split('
+')
+      .map(l => l.trim()).filter(l => l.length > 2 && l.length < 50)
+      .filter(l => (l.match(/[א-ת]/g) || []).length >= 2);
+    return lines.map(l => ({ title: l, author: '', conf: 70, _src: 'ocrspace' }));
+  } catch(e) { return []; }
+}
+
+async function ocrGemini(base64) {
   try {
     const response = await fetch('https://librarytor-ai.daddycoolix.workers.dev', {
       method: 'POST',
@@ -7849,17 +7900,46 @@ async function sendToWorker(base64) {
       body: JSON.stringify({ image: base64 })
     });
     const data = await response.json();
-    const books = data.books || [];
-    // נקה ופרד מחבר משם ספר אם הגיעו יחד
-    return books.map(b => {
+    return (data.books || []).map(b => {
       let title = (b.title || '').trim();
       let author = (b.author || '').trim();
-      // אם המחבר ריק ויש " / " בשם - פרד
-      if (!author && title.includes(' / ')) {
-        const parts = title.split(' / ');
-        title = parts[0].trim();
-        author = parts[1].trim();
+      if (!author && title.includes(' / ')) { const p = title.split(' / '); title = p[0].trim(); author = p[1].trim(); }
+      if (!author && title.includes(' - ')) { const p = title.split(' - '); title = p[0].trim(); author = p[1].trim(); }
+      return { title, author, conf: b.conf || 80, _src: 'gemini' };
+    }).filter(b => b.title && b.title.length >= 2);
+  } catch(e) { return []; }
+}
+
+function mergeOCRResults(results) {
+  const map = new Map();
+  for (const books of results) {
+    for (const b of books) {
+      const key = b.title.trim().toLowerCase();
+      if (!map.has(key)) {
+        map.set(key, { ...b, _count: 1 });
+      } else {
+        const ex = map.get(key);
+        ex._count++;
+        if (b.author && !ex.author) ex.author = b.author;
+        ex.conf = Math.min(95, ex.conf + 10);
       }
+    }
+  }
+  return Array.from(map.values()).sort((a, b) => b._count - a._count || b.conf - a.conf);
+}
+
+async function sendToWorker(base64) {
+  const [r1, r2, r3] = await Promise.allSettled([
+    ocrTesseract(base64),
+    ocrSpace(base64),
+    ocrGemini(base64),
+  ]);
+  const t = r1.status === 'fulfilled' ? r1.value : [];
+  const o = r2.status === 'fulfilled' ? r2.value : [];
+  const g = r3.status === 'fulfilled' ? r3.value : [];
+  return mergeOCRResults([t, o, g]).filter(b => b.title && b.title.length >= 2);
+}
+
       // אם המחבר ריק ויש " - " בשם - פרד
       if (!author && title.includes(' - ')) {
         const parts = title.split(' - ');
