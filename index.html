@@ -272,7 +272,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
-          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.07</span>
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.10</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -6879,7 +6879,7 @@ async function processImageForBooks(dataUrl, file, lat, lng) {
 
   try {
     // כווץ תמונה
-    const compressed = await compressImage(dataUrl, 1600);
+    const compressed = await compressImage(dataUrl, 1200);
 
     // שלח ל-3 חלקים
     const slices = await sliceImage(compressed, 5);
@@ -6909,7 +6909,7 @@ async function processImageForBooks(dataUrl, file, lat, lng) {
     document.getElementById('found-books').innerHTML = `<div style="padding:16px;text-align:center;color:rgba(255,255,255,0.7);">מאמת ${allBooks.length} ספרים...</div>`;
     const verified = await verifyWithGoogleBooks(allBooks, null);
 
-    document.getElementById('ai-chip').textContent = `זוהו ${verified.length} ספרים`;
+    document.getElementById('ai-chip').textContent = `📚 ${allBooks.length} נראו | ✅ ${matched} אומתו`;
     const matched = verified.filter(b => b.matched).length;
     window._pendingBooks = verified.map(b => ({...b, date: new Date().toLocaleDateString('he-IL'), recent: true}));
     renderBooksList(window._pendingBooks, 'scan', document.getElementById('found-books'));
@@ -7583,19 +7583,15 @@ async function analyzeMultipleImages(fileDataList, lat, lng) {
       </div>`;
 
     try {
-      const compressed = await compressImage(dataUrl, 1600);
-      const slices = await sliceImage(compressed, 5);
-
-      // כל חלק - זיהוי עם סינון עברית
-      for (const slice of slices) {
-        const books = await sendToWorker(slice);
-        for (const b of books) {
-          if (!b.title) continue;
-          if (!isHebrew(b.title)) continue;
-          if (b.author && b.author.trim() && !isHebrew(b.author)) b.author = '';
-          const key = b.title.trim().replace(/['"״]/g,'').replace(/\s+/g,' ').toLowerCase();
-          if (!seen.has(key)) { seen.add(key); allBooks.push(b); }
-        }
+      const compressed = await compressImage(dataUrl, 1200);
+      // שלח תמונה שלמה - בקשה אחת בלבד
+      const books = await sendToWorker(compressed.split(',')[1]);
+      for (const b of books) {
+        if (!b.title) continue;
+        if (!isHebrew(b.title)) continue;
+        if (b.author && b.author.trim() && !isHebrew(b.author)) b.author = '';
+        const key = b.title.trim().replace(/['"״]/g,'').replace(/\s+/g,' ').toLowerCase();
+        if (!seen.has(key)) { seen.add(key); allBooks.push(b); }
       }
     } catch(e) { console.warn('Image', imgIdx, 'failed:', e); }
   }
@@ -7620,7 +7616,7 @@ async function analyzeMultipleImages(fileDataList, lat, lng) {
   const matchedCount = verified.filter(b => b.matched).length;
   document.getElementById('recog-status').innerHTML =
     `<div style="font-size:12px;color:var(--primary);padding:4px 0;">
-      ✅ זוהו ${verified.length} ספרים עבריים - ${matchedCount} אומתו באינטרנט
+      📚 נראו בתמונה: ${allBooks.length} | ✅ זוהו: ${verified.length} | אומתו: ${matchedCount}
     </div>`;
 
   window._recognizedBooks = verified.map(b => ({...b, date: new Date().toLocaleDateString('he-IL'), recent: true}));
@@ -7795,7 +7791,7 @@ async function rotateImage90(dataUrl) {
       ctx.translate(canvas.width/2, canvas.height/2);
       ctx.rotate(90 * Math.PI/180);
       ctx.drawImage(img, -img.width/2, -img.height/2);
-      resolve(canvas.toDataURL('image/jpeg', 0.85));
+      resolve(canvas.toDataURL('image/jpeg', 0.80));
     };
     img.src = dataUrl;
   });
@@ -7815,7 +7811,7 @@ async function compressImage(dataUrl, maxSize) {
       canvas.width = w;
       canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      resolve(canvas.toDataURL('image/jpeg', 0.85));
+      resolve(canvas.toDataURL('image/jpeg', 0.80));
     };
     img.src = dataUrl;
   });
@@ -8241,7 +8237,7 @@ async function analyzeImageWithClaude(dataUrl, mediaType, lat, lng) {
       '<div style="padding:16px;text-align:center;color:var(--text-muted);">מנתח תמונה בחלקים... עשוי לקחת כ-30 שניות</div>';
 
     // כווץ תמונה ל-1600px
-    const compressed = await compressImage(dataUrl, 1600);
+    const compressed = await compressImage(dataUrl, 1200);
 
     // חתוך ל-3 חלקים ושלח כל אחד בנפרד
     const slices = await sliceImage(compressed, 5);
@@ -8273,7 +8269,7 @@ async function analyzeImageWithClaude(dataUrl, mediaType, lat, lng) {
 
     const matchedCount = verified.filter(b => b.matched).length;
     document.getElementById('recog-status').innerHTML =
-      `<div style="font-size:12px;color:var(--primary);padding:4px 0;">✅ זוהו ${verified.length} ספרים - ${matchedCount} אומתו באינטרנט</div>`;
+      `<div style="font-size:12px;color:var(--primary);padding:4px 0;">📚 נראו: ${allBooks.length} | ✅ זוהו: ${verified.length} | אומתו: ${matchedCount}</div>`;
 
     window._recognizedBooks = verified.map(b => ({...b, date: new Date().toLocaleDateString('he-IL'), recent: true}));
     window._pendingBooks = window._recognizedBooks;
