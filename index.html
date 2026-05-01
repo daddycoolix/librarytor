@@ -272,7 +272,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
-          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.10</span>
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.11</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -8108,72 +8108,156 @@ async function reVerifyBook(idx, containerId) {
   }
 }
 
-// חיפוש מעמיק - בודק את כל אפשרויות האותיות והמילים
+// חיפוש מעמיק - ספרייה לאומית + סימניה + Google Books + וריאציות
 async function deepSearchBook(title, author) {
   // 1. חיפוש רגיל קודם
   let info = await searchWithVariants(title, author);
   if (info) return info;
 
+  // 2. ספרייה לאומית של ישראל - הכי אמין לעברית
+  info = await searchNationalLibrary(title, author);
+  if (info) return info;
+
+  // 3. סימניה - אתר ספרים ישראלי
+  info = await searchSimania(title, author);
+  if (info) return info;
+
+  // 4. השוואה מול ספרים שכבר במערכת
+  info = searchInBooksDB(title, author);
+  if (info) return info;
+
   const words = title.trim().split(/\s+/);
 
-  // 2. הפיכת סדר מילים
+  // 5. הפיכת סדר מילים
   info = await searchOneBook(words.slice().reverse().join(' '), author);
   if (info) return info;
 
-  // 3. כל תת-רצף של מילים (2-3 מילים רצופות)
+  // 6. כל תת-רצף של מילים
   for (let len = Math.min(3, words.length); len >= 2; len--) {
     for (let start = 0; start <= words.length - len; start++) {
       const sub = words.slice(start, start + len).join(' ');
       info = await searchOneBook(sub, author);
       if (info) return info;
-      if (author) {
-        info = await searchOneBook(sub, '');
-        if (info) return info;
-      }
     }
   }
 
-  // 4. החלפות אותיות דומות - כל הצירופים
+  // 7. החלפות אותיות דומות
   const letterSwaps = [
     [/ן/g, 'נ'], [/ף/g, 'פ'], [/ם/g, 'מ'], [/ך/g, 'כ'], [/ץ/g, 'צ'],
     [/ו/g, 'ב'], [/ה/g, 'א'], [/א/g, 'ה'], [/ח/g, 'כ'], [/ר/g, 'ד'],
-    [/ד/g, 'ר'], [/ל/g, 'כ'], [/ס/g, 'ע'],
   ];
   for (const [from, to] of letterSwaps) {
     if (from.test(title)) {
       const variant = title.replace(from, to);
       if (variant !== title) {
-        info = await searchOneBook(variant, author);
+        info = await searchNationalLibrary(variant, author) || await searchOneBook(variant, author);
         if (info) return info;
       }
     }
   }
 
-  // 5. ניסיון עם כל מילה בנפרד (לספר עם מילה בולטת)
-  for (const word of words) {
-    if (word.length >= 4) {
-      info = await searchOneBook(word, author);
-      if (info) return info;
-    }
-  }
-
-  // 6. שם מחבר בלבד - חפש ספרים שלו ובדוק דמיון
+  // 8. חיפוש לפי מחבר בספרייה הלאומית
   if (author && author.trim()) {
-    try {
-      const q = encodeURIComponent(author);
-      const res = await fetch(`https://openlibrary.org/search.json?author=${q}&limit=10&fields=title,author_name`);
-      const data = await res.json();
-      if (data.docs) {
-        for (const doc of data.docs) {
-          if (strSimilarity(title, doc.title || '') > 0.4) {
-            return { title: doc.title, author: (doc.author_name||[])[0] || author, source: 'Open Library' };
-          }
-        }
-      }
-    } catch(e) {}
+    info = await searchNationalLibraryByAuthor(author, title);
+    if (info) return info;
   }
 
   return null;
+}
+
+// חיפוש בספרייה הלאומית של ישראל
+async function searchNationalLibrary(title, author) {
+  try {
+    const q = encodeURIComponent(title + (author ? ' ' + author : ''));
+    const res = await fetch(
+      `https://api.nli.org.il/openlibrary/search?query=${q}&lang=heb&materialType=BOOK&pageSize=5`,
+      { headers: { 'Accept': 'application/json' } }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    const docs = data.docs || data.results || [];
+    for (const doc of docs) {
+      const t = doc.title || doc.titleStatement || '';
+      const a = doc.author || doc.creator || '';
+      if (t && strSimilarity(title, t) > 0.5) {
+        return { title: t, author: a || author || '', source: 'ספרייה לאומית' };
+      }
+    }
+    return null;
+  } catch(e) { return null; }
+}
+
+// חיפוש בספרייה הלאומית לפי מחבר
+async function searchNationalLibraryByAuthor(author, title) {
+  try {
+    const q = encodeURIComponent(author);
+    const res = await fetch(
+      `https://api.nli.org.il/openlibrary/search?query=${q}&lang=heb&materialType=BOOK&pageSize=10`,
+      { headers: { 'Accept': 'application/json' } }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    const docs = data.docs || data.results || [];
+    for (const doc of docs) {
+      const t = doc.title || doc.titleStatement || '';
+      if (t && strSimilarity(title, t) > 0.45) {
+        return { title: t, author: author, source: 'ספרייה לאומית' };
+      }
+    }
+    return null;
+  } catch(e) { return null; }
+}
+
+// חיפוש בסימניה
+async function searchSimania(title, author) {
+  try {
+    const q = encodeURIComponent(title + (author ? ' ' + author : ''));
+    const res = await fetch(
+      `https://simania.co.il/searchBooks.php?searchType=tabAll&query=${q}`,
+      { headers: { 'Accept': 'text/html' } }
+    );
+    if (!res.ok) return null;
+    const html = await res.text();
+    // חלץ שמות ספרים מה-HTML
+    const matches = html.match(/class="book-title[^"]*"[^>]*>([^<]+)</g) || [];
+    for (const m of matches) {
+      const t = m.replace(/class="[^"]*"[^>]*>/, '').replace(/<[^>]*>/g, '').trim();
+      if (t && isHebrew(t) && strSimilarity(title, t) > 0.55) {
+        // חלץ מחבר אם אפשר
+        return { title: t, author: author || '', source: 'סימניה' };
+      }
+    }
+    return null;
+  } catch(e) { return null; }
+}
+
+// חיפוש מול ספרים שכבר במערכת
+function searchInBooksDB(title, author) {
+  try {
+    // עבור על כל הספרים שכבר קיימים
+    for (const libId of Object.keys(booksDB)) {
+      const books = booksDB[libId] || [];
+      for (const book of books) {
+        if (!book.title) continue;
+        const sim = strSimilarity(title, book.title);
+        if (sim > 0.75) {
+          return { title: book.title, author: book.author || author || '', source: 'מאגר הספריות' };
+        }
+      }
+    }
+    // גם מ-Firebase
+    for (const libId of Object.keys(firebaseBooks)) {
+      const books = firebaseBooks[libId] || [];
+      for (const book of books) {
+        if (!book.title) continue;
+        const sim = strSimilarity(title, book.title);
+        if (sim > 0.75) {
+          return { title: book.title, author: book.author || author || '', source: 'מאגר הספריות' };
+        }
+      }
+    }
+    return null;
+  } catch(e) { return null; }
 }
 
 // רינדור כרטיס ספר אחד
