@@ -7943,17 +7943,6 @@ async function sendToWorker(base64) {
   return mergeOCRResults([t, o, g]).filter(b => b.title && b.title.length >= 2);
 }
 
-      // אם המחבר ריק ויש " - " בשם - פרד
-      if (!author && title.includes(' - ')) {
-        const parts = title.split(' - ');
-        title = parts[0].trim();
-        author = parts[1].trim();
-      }
-      return { title, author, conf: b.conf || 80 };
-    }).filter(b => b.title && b.title.trim().length >= 2);
-  } catch(e) { return []; }
-}
-
 // בדוק אם מחרוזת היא עברית
 function isHebrew(str) {
   if (!str) return false;
