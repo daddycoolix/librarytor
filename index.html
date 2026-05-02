@@ -272,7 +272,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
-          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.14</span>
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.15</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -7865,10 +7865,9 @@ async function ocrTesseract(base64, statusEl) {
     const worker = await getTesseractWorker(statusEl);
     if (!worker) return [];
     const { data } = await worker.recognize(`data:image/jpeg;base64,${base64}`);
-    const lines = (data.text || '').split('
-')
+    const lines = (data.text || '').split('\n')
       .map(l => l.trim()).filter(l => l.length > 2 && l.length < 50)
-      .filter(l => (l.match(/[א-ת]/g) || []).length >= 2);
+      .filter(l => (l.match(/[\u05D0-\u05EA]/g) || []).length >= 2);
     return lines.map(l => ({ title: l, author: '', conf: 65, _src: 'tesseract' }));
   } catch(e) { return []; }
 }
@@ -7889,10 +7888,9 @@ async function ocrSpace(base64) {
     });
     const data = await res.json();
     const text = data.ParsedResults?.[0]?.ParsedText || '';
-    const lines = text.split('
-')
+    const lines = text.split('\n')
       .map(l => l.trim()).filter(l => l.length > 2 && l.length < 50)
-      .filter(l => (l.match(/[א-ת]/g) || []).length >= 2);
+      .filter(l => (l.match(/[\u05D0-\u05EA]/g) || []).length >= 2);
     return lines.map(l => ({ title: l, author: '', conf: 70, _src: 'ocrspace' }));
   } catch(e) { return []; }
 }
@@ -7960,7 +7958,7 @@ async function sendToWorker(base64) {
 function isHebrew(str) {
   if (!str) return false;
   // מספיק תו עברי אחד - Gemini כבר מסנן אנגלית
-  const heb = (str.match(/[א-ת]/g) || []).length;
+  const heb = (str.match(/[\u05D0-\u05EA]/g) || []).length;
   return heb >= 1;
 }
 
