@@ -272,7 +272,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
-          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.18</span>
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.19</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -7585,6 +7585,7 @@ async function analyzeMultipleImages(fileDataList, lat, lng) {
 
     try {
       const compressed = await compressImage(dataUrl, 1200);
+      window._lastImageBase64 = compressed.split(',')[1]; // שמור לשימוש בזיהוי מעמיק
       document.getElementById('recog-status').innerHTML =
         `<div style="padding:10px;text-align:center;color:var(--text-muted);font-size:13px;" id="ocr-status-msg">
           🔍 מזהה ספרים... (${imgIdx+1}/${total})
@@ -7981,15 +7982,7 @@ function mergeOCRResults(results) {
 }
 
 async function sendToWorker(base64) {
-  const [r1, r2, r3] = await Promise.allSettled([
-    ocrTesseract(base64),
-    ocrSpace(base64),
-    ocrGemini(base64),
-  ]);
-  const t = r1.status === 'fulfilled' ? r1.value : [];
-  const o = r2.status === 'fulfilled' ? r2.value : [];
-  const g = r3.status === 'fulfilled' ? r3.value : [];
-  return mergeOCRResults([t, o, g]).filter(b => b.title && b.title.length >= 2);
+  return await ocrGemini(base64);
 }
 
 // בדוק אם מחרוזת היא עברית
@@ -8196,6 +8189,52 @@ async function verifyWithGoogleBooks(books, statusElId) {
 }
 
 // אימות ספר בודד בלחיצה (על הכפתור האדום)
+// זיהוי מעמיק - מפעיל Tesseract + OCR.space + ספרייה לאומית + סימניה
+async function deepVerifyBook(idx, containerId) {
+  const books = window._pendingBooks || window._recognizedBooks || [];
+  if (!books[idx]) return;
+  const book = books[idx];
+
+  const card = document.getElementById(`book-card-${containerId}-${idx}`);
+  const btn = card ? card.querySelector('button[onclick*="deepVerifyBook"]') : null;
+  if (btn) { btn.textContent = '⏳ מחפש...'; btn.disabled = true; }
+
+  // הפעל את כל מנועי הזיהוי הנוספים
+  let info = null;
+
+  // 1. חיפוש מעמיק באינטרנט
+  info = await deepSearchBook(book.title, book.author);
+
+  // 2. אם לא נמצא - נסה עם OCR.space על שם הספר
+  if (!info) {
+    const ocrResult = await ocrSpace(btoa(unescape(encodeURIComponent(book.title))));
+    if (ocrResult.length > 0) {
+      info = await deepSearchBook(ocrResult[0].title, book.author);
+    }
+  }
+
+  // 3. נסה Tesseract על שם הספר
+  if (!info && window._lastImageBase64) {
+    const tessResult = await ocrTesseract(window._lastImageBase64);
+    for (const r of tessResult) {
+      if (r.title && r.title.length > 2) {
+        const found = await deepSearchBook(r.title, '');
+        if (found) { info = found; break; }
+      }
+    }
+  }
+
+  if (info) {
+    book.matched = true;
+    book.title = info.title || book.title;
+    book.author = (info.author && isHebrew(info.author)) ? info.author : (book.author || '');
+    book.source = info.source;
+  }
+
+  const cardEl = document.getElementById(`book-card-${containerId}-${idx}`);
+  if (cardEl) renderBookCard(cardEl, book, idx, containerId);
+}
+
 async function reVerifyBook(idx, containerId) {
   const books = window._pendingBooks || window._recognizedBooks || [];
   if (!books[idx]) return;
@@ -8399,6 +8438,10 @@ function renderBookCard(container, book, idx, containerId) {
         ${book.matched
           ? `<div style="font-size:10px;color:#2E7D52;">✓ אומת - ${book.source || ''}</div>`
           : `<div class="book-no-match" style="font-size:10px;color:#ef4444;">לא אומת - לחץ 🔴 לניסיון נוסף</div>`}
+        <button onclick="deepVerifyBook(${idx},'${containerId}')"
+          style="margin-top:3px;font-size:9px;padding:2px 7px;border:1px solid #2E7D52;border-radius:6px;background:none;color:#2E7D52;cursor:pointer;font-family:Heebo,sans-serif;">
+          🔎 זיהוי מעמיק
+        </button>
       </div>
       ${statusBtn}
     </div>`;
@@ -8429,6 +8472,10 @@ function renderBooksList(books, containerId, wrapperEl) {
             ${b.matched
               ? `<div style="font-size:10px;color:#2E7D52;">✓ אומת - ${b.source || ''}</div>`
               : `<div class="book-no-match" style="font-size:10px;color:#ef4444;">לא אומת - לחץ 🔴 לניסיון נוסף</div>`}
+            <button onclick="deepVerifyBook(${i},'${containerId}')"
+              style="margin-top:3px;font-size:9px;padding:2px 7px;border:1px solid #2E7D52;border-radius:6px;background:none;color:#2E7D52;cursor:pointer;font-family:Heebo,sans-serif;">
+              🔎 זיהוי מעמיק
+            </button>
           </div>
           ${statusBtn}
         </div>
