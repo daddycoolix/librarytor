@@ -1,5 +1,4 @@
-// V44.01 - מספר הגרסה חייב להשתנות בכל עדכון
-const CACHE = 'librarytor-v44.04';
+const CACHE = 'librarytor-v44.16';
 const ASSETS = ['./', '/index.html', '/manifest.json', '/libraries_data.js', '/books_data.js'];
 
 self.addEventListener('install', e => {
