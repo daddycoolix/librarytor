@@ -272,7 +272,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
-          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.22</span>
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.27</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -6896,7 +6896,12 @@ async function processImageForBooks(dataUrl, file, lat, lng) {
         if (!isHebrew(b.title)) continue;
         if (b.author && b.author.trim() && !isHebrew(b.author)) b.author = '';
         const key = b.title.trim().replace(/['"״]/g,'').toLowerCase();
-        if (!seen.has(key)) { seen.add(key); allBooks.push(b); }
+        if (!seen.has(key)) {
+          seen.add(key);
+          b._sliceBase64 = slices[i]; // שמור חלק לזיהוי מעמיק
+          b._sliceIdx = i;
+          allBooks.push(b);
+        }
       }
     }
 
@@ -7602,7 +7607,12 @@ async function analyzeMultipleImages(fileDataList, lat, lng) {
         for (const sb of sliceBooks) {
           if (!sb.title) continue;
           const k = sb.title.trim().toLowerCase();
-          if (!seenThisImg.has(k)) { seenThisImg.add(k); booksThisImg.push(sb); }
+          if (!seenThisImg.has(k)) {
+            seenThisImg.add(k);
+            sb._sliceBase64 = slices[si]; // שמור את החלק שבו זוהה הספר
+            sb._sliceIdx = si;
+            booksThisImg.push(sb);
+          }
         }
       }
 
@@ -7961,6 +7971,25 @@ async function ocrSpace(base64) {
   } catch(e) { return []; }
 }
 
+async function ocrLlama(base64) {
+  try {
+    const response = await fetch('https://librarytor-ai.daddycoolix.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image: base64, engine: 'llama' })
+    });
+    if (!response.ok) return [];
+    const data = await response.json();
+    if (!data.books || !Array.isArray(data.books)) return [];
+    return data.books.map(b => ({
+      title: (b.title || '').trim(),
+      author: (b.author || '').trim(),
+      conf: b.conf || 70,
+      _src: 'llama'
+    })).filter(b => b.title && b.title.length >= 2);
+  } catch(e) { return []; }
+}
+
 async function ocrGemini(base64) {
   try {
     const response = await fetch('https://librarytor-ai.daddycoolix.workers.dev', {
@@ -8054,13 +8083,19 @@ async function searchOpenLibrary(title, author) {
       if (!data.docs || !data.docs.length) continue;
       for (const doc of data.docs) {
         const sim = strSimilarity(title, doc.title || '');
-        if (sim > 0.5) {
-          return {
-            title: doc.title || title,
-            author: (doc.author_name && doc.author_name[0]) || author || '',
-            source: 'Open Library'
-          };
+        if (sim < 0.7) continue;
+        const docAuthor = (doc.author_name && doc.author_name[0]) || '';
+        // דרוש התאמת מחבר - אם יש מחבר ידוע, חייב להתאים
+        if (author && author.trim() && docAuthor) {
+          const authorSim = strSimilarity(author, docAuthor);
+          if (authorSim < 0.4) continue;
         }
+        return {
+          title: doc.title || title,
+          author: docAuthor || author || '',
+          source: 'Open Library',
+          _titleSim: sim
+        };
       }
     }
     return null;
@@ -8082,13 +8117,19 @@ async function searchGoogleBooks(title, author) {
     for (const item of data.items) {
       const t = item.volumeInfo.title || '';
       const sim = strSimilarity(title, t);
-      if (sim > 0.55) {
-        return {
-          title: t || title,
-          author: (item.volumeInfo.authors && item.volumeInfo.authors[0]) || author || '',
-          source: 'Google Books'
-        };
+      if (sim < 0.7) continue;
+      const gbAuthor = (item.volumeInfo.authors && item.volumeInfo.authors[0]) || '';
+      // דרוש התאמת מחבר - אם יש מחבר ידוע, חייב להתאים
+      if (author && author.trim() && gbAuthor) {
+        const authorSim = strSimilarity(author, gbAuthor);
+        if (authorSim < 0.4) continue;
       }
+      return {
+        title: t || title,
+        author: gbAuthor || author || '',
+        source: 'Google Books',
+        _titleSim: sim
+      };
     }
     return null;
   } catch(e) { return null; }
@@ -8159,7 +8200,7 @@ async function verifyWithGoogleBooks(books, statusElId) {
     batch.forEach((book, idx) => {
       const info = batchResults[idx];
       if (info) {
-        const useInternetTitle = info.title && isHebrew(info.title) && strSimilarity(book.title, info.title) > 0.35;
+        const useInternetTitle = info.title && isHebrew(info.title) && strSimilarity(book.title, info.title) > 0.7;
         results.push({
           title: useInternetTitle ? info.title : book.title,
           author: (info.author && isHebrew(info.author)) ? info.author : (book.author || ''),
@@ -8220,59 +8261,148 @@ async function verifyWithGoogleBooks(books, statusElId) {
   return final;
 }
 
-// אימות ספר בודד בלחיצה (על הכפתור האדום)
-// זיהוי מעמיק - מפעיל Tesseract + OCR.space + ספרייה לאומית + סימניה
+// זיהוי מעמיק - חיתוך ספר ספציפי + כל מנועי OCR + סיבוב + הצלבה אינטרנטית
 async function deepVerifyBook(idx, containerId) {
   const books = window._pendingBooks || window._recognizedBooks || [];
   if (!books[idx]) return;
   const book = books[idx];
 
-  const card = document.getElementById(`book-card-${containerId}-${idx}`);
+  let card = document.getElementById(`book-card-${containerId}-${idx}`);
+  if (!card) {
+    card = document.getElementById(`book-card-scan-${idx}`) ||
+           document.getElementById(`book-card-recog-${idx}`);
+  }
   const btn = card ? card.querySelector('button[onclick*="deepVerifyBook"]') : null;
-  if (btn) { btn.textContent = '⏳ מחפש...'; btn.disabled = true; }
+  if (btn) { btn.textContent = '⏳...'; btn.disabled = true; }
+  const setStatus = (msg) => { if (btn) btn.textContent = msg; };
 
-  // הפעל את כל מנועי הזיהוי הנוספים
-  let info = null;
+  const foundTitles = new Set();
+  const foundAuthors = new Set();
+  if (book.title) foundTitles.add(book.title.trim());
+  if (book.author) foundAuthors.add(book.author.trim());
 
-  // 1. חיפוש מעמיק באינטרנט
-  info = await deepSearchBook(book.title, book.author);
+  // השתמש בחלק הספציפי של הספר אם קיים, אחרת כל התמונה
+  const bookBase64 = book._sliceBase64 || window._lastImageBase64;
 
-  // 2. אם לא נמצא - נסה עם OCR.space על שם הספר
-  if (!info) {
-    const ocrResult = await ocrSpace(btoa(unescape(encodeURIComponent(book.title))));
-    if (ocrResult.length > 0) {
-      info = await deepSearchBook(ocrResult[0].title, book.author);
-    }
+  // פונקציה: סובב תמונה
+  async function rotateImage(base64, degrees) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const rad = degrees * Math.PI / 180;
+        if (degrees === 90 || degrees === 270) {
+          canvas.width = img.height; canvas.height = img.width;
+        } else {
+          canvas.width = img.width; canvas.height = img.height;
+        }
+        const ctx = canvas.getContext('2d');
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate(rad);
+        ctx.drawImage(img, -img.width / 2, -img.height / 2);
+        resolve(canvas.toDataURL('image/jpeg', 0.85).split(',')[1]);
+      };
+      img.onerror = () => resolve(base64);
+      img.src = 'data:image/jpeg;base64,' + base64;
+    });
   }
 
-  // 3. נסה Tesseract על שם הספר
-  if (!info && window._lastImageBase64) {
-    const tessResult = await ocrTesseract(window._lastImageBase64);
-    for (const r of tessResult) {
-      if (r.title && r.title.length > 2) {
-        const found = await deepSearchBook(r.title, '');
-        if (found) { info = found; break; }
+  // פונקציה: הרץ כל מנועי OCR החינמיים על תמונה נתונה
+  async function runAllEngines(base64, label) {
+    setStatus(`🔍 ${label}...`);
+    const results = await Promise.allSettled([
+      ocrGemini(base64),       // Gemini Vision
+      ocrLlama(base64),        // Llama 3.2 Vision (Cloudflare)
+      ocrSpace(base64),        // OCR.space
+      ocrTesseract(base64, null), // Tesseract.js מקומי
+    ]);
+    const allBooks = [];
+    for (const r of results) {
+      if (r.status === 'fulfilled' && Array.isArray(r.value)) {
+        allBooks.push(...r.value);
+      }
+    }
+    return allBooks;
+  }
+
+  // שלב 1: כל המנועים על החלק הספציפי
+  if (bookBase64) {
+    const origBooks = await runAllEngines(bookBase64, 'ניתוח ספר');
+    for (const b of origBooks) {
+      if (b.title && b.title.length > 1) foundTitles.add(b.title.trim());
+      if (b.author && b.author.length > 1) foundAuthors.add(b.author.trim());
+    }
+
+    // שלב 2: סיבוב ב-90°, 180°, 270° + כל המנועים בכל סיבוב
+    for (const deg of [90, 180, 270]) {
+      setStatus(`🔄 סיבוב ${deg}°...`);
+      const rotated = await rotateImage(bookBase64, deg);
+      const rotBooks = await runAllEngines(rotated, `${deg}°`);
+      for (const b of rotBooks) {
+        if (b.title && b.title.length > 1) foundTitles.add(b.title.trim());
+        if (b.author && b.author.length > 1) foundAuthors.add(b.author.trim());
       }
     }
   }
 
-  if (info) {
-    book.matched = true;
-    book.title = info.title || book.title;
-    book.author = (info.author && isHebrew(info.author)) ? info.author : (book.author || '');
-    book.source = info.source;
+  console.log('[DeepVerify] כותרות:', [...foundTitles]);
+  console.log('[DeepVerify] מחברים:', [...foundAuthors]);
+
+  // שלב 3: הצלבה אינטרנטית - כל כותרת × כל מחבר
+  setStatus('🌐 מצליב...');
+  let bestInfo = null;
+  let bestScore = 0;
+
+  const titlesToTry = [...foundTitles].filter(Boolean);
+  const authorsToTry = [...foundAuthors].filter(Boolean);
+  if (authorsToTry.length === 0) authorsToTry.push('');
+
+  for (const title of titlesToTry) {
+    for (const author of authorsToTry) {
+      setStatus(`🌐 ${title.substring(0, 10)}...`);
+      const info = await deepSearchBook(title, author);
+      if (info) {
+        const score = strSimilarity(title, info.title || '');
+        if (score > bestScore) { bestScore = score; bestInfo = info; }
+        if (bestScore > 0.85) break;
+      }
+    }
+    if (bestScore > 0.85) break;
   }
 
-  const cardEl = document.getElementById(`book-card-${containerId}-${idx}`);
+  // שלב 4: נסה לפי מחבר בלבד אם לא נמצא
+  if (!bestInfo && authorsToTry[0]) {
+    for (const author of authorsToTry) {
+      setStatus(`👤 ${author.substring(0, 10)}...`);
+      const info = await searchNationalLibraryByAuthor(author, book.title);
+      if (info) { bestInfo = info; break; }
+    }
+  }
+
+  if (bestInfo) {
+    book.matched = true;
+    book.title = bestInfo.title || book.title;
+    book.author = (bestInfo.author && isHebrew(bestInfo.author)) ? bestInfo.author : (book.author || '');
+    book.source = bestInfo.source;
+  } else {
+    book._deepTried = true;
+  }
+
+  const cardEl = document.getElementById(`book-card-${containerId}-${idx}`) ||
+                 document.getElementById(`book-card-scan-${idx}`) ||
+                 document.getElementById(`book-card-recog-${idx}`);
   if (cardEl) renderBookCard(cardEl, book, idx, containerId);
 }
-
 async function reVerifyBook(idx, containerId) {
   const books = window._pendingBooks || window._recognizedBooks || [];
   if (!books[idx]) return;
   const book = books[idx];
 
-  const card = document.getElementById(`book-card-${containerId}-${idx}`);
+  let card = document.getElementById(`book-card-${containerId}-${idx}`);
+  if (!card) {
+    card = document.getElementById(`book-card-scan-${idx}`) ||
+           document.getElementById(`book-card-recog-${idx}`);
+  }
   if (card) {
     const btn = card.querySelector('.book-status-btn');
     if (btn) { btn.innerHTML = '⏳'; btn.disabled = true; }
@@ -8371,9 +8501,15 @@ async function searchNationalLibrary(title, author) {
     for (const doc of docs) {
       const t = doc.title || doc.titleStatement || '';
       const a = doc.author || doc.creator || '';
-      if (t && strSimilarity(title, t) > 0.5) {
-        return { title: t, author: a || author || '', source: 'ספרייה לאומית' };
+      if (!t) continue;
+      const titleSim = strSimilarity(title, t);
+      if (titleSim < 0.7) continue;
+      // דרוש התאמת מחבר אם יש מחבר ידוע
+      if (author && author.trim() && a) {
+        const authorSim = strSimilarity(author, a);
+        if (authorSim < 0.4) continue;
       }
+      return { title: t, author: a || author || '', source: 'ספרייה לאומית', _titleSim: titleSim };
     }
     return null;
   } catch(e) { return null; }
@@ -8392,7 +8528,7 @@ async function searchNationalLibraryByAuthor(author, title) {
     const docs = data.docs || data.results || [];
     for (const doc of docs) {
       const t = doc.title || doc.titleStatement || '';
-      if (t && strSimilarity(title, t) > 0.45) {
+      if (t && strSimilarity(title, t) > 0.7) {
         return { title: t, author: author, source: 'ספרייה לאומית' };
       }
     }
@@ -8414,7 +8550,7 @@ async function searchSimania(title, author) {
     const matches = html.match(/class="book-title[^"]*"[^>]*>([^<]+)</g) || [];
     for (const m of matches) {
       const t = m.replace(/class="[^"]*"[^>]*>/, '').replace(/<[^>]*>/g, '').trim();
-      if (t && isHebrew(t) && strSimilarity(title, t) > 0.55) {
+      if (t && isHebrew(t) && strSimilarity(title, t) > 0.7) {
         // חלץ מחבר אם אפשר
         return { title: t, author: author || '', source: 'סימניה' };
       }
@@ -8432,9 +8568,11 @@ function searchInBooksDB(title, author) {
       for (const book of books) {
         if (!book.title) continue;
         const sim = strSimilarity(title, book.title);
-        if (sim > 0.75) {
-          return { title: book.title, author: book.author || author || '', source: 'מאגר הספריות' };
+        if (sim < 0.75) continue;
+        if (author && author.trim() && book.author && book.author.trim()) {
+          if (strSimilarity(author, book.author) < 0.4) continue;
         }
+        return { title: book.title, author: book.author || author || '', source: 'מאגר הספריות' };
       }
     }
     // גם מ-Firebase
@@ -8443,9 +8581,11 @@ function searchInBooksDB(title, author) {
       for (const book of books) {
         if (!book.title) continue;
         const sim = strSimilarity(title, book.title);
-        if (sim > 0.75) {
-          return { title: book.title, author: book.author || author || '', source: 'מאגר הספריות' };
+        if (sim < 0.75) continue;
+        if (author && author.trim() && book.author && book.author.trim()) {
+          if (strSimilarity(author, book.author) < 0.4) continue;
         }
+        return { title: book.title, author: book.author || author || '', source: 'מאגר הספריות' };
       }
     }
     return null;
@@ -8454,46 +8594,58 @@ function searchInBooksDB(title, author) {
 
 // רינדור כרטיס ספר אחד
 function renderBookCard(container, book, idx, containerId) {
-  const borderColor = book.matched ? 'var(--border)' : '#ef4444';
-  const titleColor = book.matched ? 'inherit' : '#ef4444';
+  // 3 מצבים: matched=ירוק, _deepTried=צהוב, רגיל=אדום
+  const isDeepUnmatched = !book.matched && book._deepTried;
+  const borderColor = book.matched ? 'var(--border)' : isDeepUnmatched ? '#f59e0b' : '#ef4444';
+  const titleColor = book.matched ? 'inherit' : isDeepUnmatched ? '#92400e' : '#ef4444';
+  const bgColor = isDeepUnmatched ? 'rgba(251,191,36,0.13)' : '';
   const statusBtn = book.matched
-    ? `<div class="book-status-btn" style="font-size:18px;cursor:default;">✅</div>`
-    : `<button class="book-status-btn" onclick="reVerifyBook(${idx},'${containerId}')"
-        style="font-size:18px;background:none;border:none;cursor:pointer;padding:2px;" title="לחץ לניסיון אימות נוסף">🔴</button>`;
+    ? ``
+    : isDeepUnmatched
+      ? ``
+      : `<button class="book-status-btn" onclick="reVerifyBook(${idx},'${containerId}')"
+          style="font-size:18px;background:none;border:none;cursor:pointer;padding:2px;" title="לחץ לניסיון אימות נוסף">🔴</button>`;
+  const statusLine = book.matched
+    ? `<div style="font-size:10px;color:#2E7D52;">✓ אומת - ${book.source || ''}</div>`
+    : isDeepUnmatched
+      ? `<div style="font-size:10px;color:#92400e;">⚠️ לא נמצא התאמה באינטרנט</div>`
+      : `<div class="book-no-match" style="font-size:10px;color:#ef4444;">לא אומת - לחץ 🔴 לניסיון נוסף</div>`;
   container.innerHTML = `
-    <div style="display:flex;align-items:center;gap:8px;">
+    <div style="display:flex;align-items:center;gap:8px;${bgColor ? 'background:'+bgColor+';border-radius:8px;padding:2px 4px;' : ''}">
       <input type="checkbox" id="cb-${containerId}-${idx}" checked
         style="width:18px;height:18px;accent-color:var(--primary);flex-shrink:0;cursor:pointer;">
       <div style="flex:1;min-width:0;">
         <div style="font-size:13px;font-weight:700;color:${titleColor};">${book.title}</div>
         ${book.author ? `<div style="font-size:11px;color:var(--text-muted);">${book.author}</div>` : ''}
-        ${book.matched
-          ? `<div style="font-size:10px;color:#2E7D52;">✓ אומת - ${book.source || ''}</div>`
-          : `<div class="book-no-match" style="font-size:10px;color:#ef4444;">לא אומת - לחץ 🔴 לניסיון נוסף</div>`}
-        <button onclick="deepVerifyBook(${idx},'${containerId}')"
-          style="margin-top:3px;font-size:9px;padding:2px 7px;border:1px solid #2E7D52;border-radius:6px;background:none;color:#2E7D52;cursor:pointer;font-family:Heebo,sans-serif;">
-          🔎 זיהוי מעמיק
-        </button>
+        ${statusLine}
       </div>
-      ${statusBtn}
+      <button onclick="deepVerifyBook(${idx},'${containerId}')"
+        style="font-size:9px;padding:3px 7px;border:1px solid #2E7D52;border-radius:6px;background:none;color:#2E7D52;cursor:pointer;font-family:Heebo,sans-serif;white-space:nowrap;flex-shrink:0;">
+        🔎 זיהוי מעמיק
+      </button>
     </div>`;
   container.style.border = `1px solid ${borderColor}`;
+  if (isDeepUnmatched) container.style.background = 'rgba(251,191,36,0.08)';
 }
 
 // רינדור כל הספרים לרכיב
 function renderBooksList(books, containerId, wrapperEl) {
   window._pendingBooks = books; // sync
   wrapperEl.innerHTML = books.map((b, i) => {
-    const borderColor = b.matched ? 'var(--border)' : '#ef4444';
-    const titleColor = b.matched ? 'inherit' : '#ef4444';
+    const isDeepUnmatched = !b.matched && b._deepTried;
+    const borderColor = b.matched ? 'var(--border)' : isDeepUnmatched ? '#f59e0b' : '#ef4444';
+    const titleColor = b.matched ? 'inherit' : isDeepUnmatched ? '#92400e' : '#ef4444';
+    const cardBg = isDeepUnmatched ? 'background:rgba(251,191,36,0.08);' : '';
     // ספר לא מאומת - checkbox לא מסומן
     const isChecked = b.matched ? 'checked' : '';
     const statusBtn = b.matched
-      ? `<div style="font-size:18px;">✅</div>`
-      : `<button class="book-status-btn" onclick="reVerifyBook(${i},'${containerId}')"
-          style="font-size:18px;background:none;border:none;cursor:pointer;padding:2px;" title="לחץ לניסיון אימות נוסף">🔴</button>`;
+      ? ``
+      : isDeepUnmatched
+        ? ``
+        : `<button class="book-status-btn" onclick="reVerifyBook(${i},'${containerId}')"
+            style="font-size:18px;background:none;border:none;cursor:pointer;padding:2px;" title="לחץ לניסיון אימות נוסף">🔴</button>`;
     return `
-      <div id="book-card-${containerId}-${i}" style="padding:8px 10px;background:var(--surface, rgba(255,255,255,0.1));border:1px solid ${borderColor};border-radius:10px;margin-bottom:7px;">
+      <div id="book-card-${containerId}-${i}" style="padding:8px 10px;background:var(--surface, rgba(255,255,255,0.1));${cardBg}border:1px solid ${borderColor};border-radius:10px;margin-bottom:7px;">
         <div style="display:flex;align-items:center;gap:8px;">
           <input type="checkbox" id="cb-${containerId}-${i}" ${isChecked}
             style="width:18px;height:18px;accent-color:var(--primary, #4ade80);flex-shrink:0;cursor:pointer;">
@@ -8503,13 +8655,15 @@ function renderBooksList(books, containerId, wrapperEl) {
             </div>
             ${b.matched
               ? `<div style="font-size:10px;color:#2E7D52;">✓ אומת - ${b.source || ''}</div>`
-              : `<div class="book-no-match" style="font-size:10px;color:#ef4444;">לא אומת - לחץ 🔴 לניסיון נוסף</div>`}
-            <button onclick="deepVerifyBook(${i},'${containerId}')"
-              style="margin-top:3px;font-size:9px;padding:2px 7px;border:1px solid #2E7D52;border-radius:6px;background:none;color:#2E7D52;cursor:pointer;font-family:Heebo,sans-serif;">
-              🔎 זיהוי מעמיק
-            </button>
+              : isDeepUnmatched
+                ? `<div style="font-size:10px;color:#92400e;">⚠️ לא נמצא התאמה באינטרנט</div>`
+                : `<div class="book-no-match" style="font-size:10px;color:#ef4444;">לא אומת - לחץ 🔴 לניסיון נוסף</div>`}
           </div>
           ${statusBtn}
+          <button onclick="deepVerifyBook(${i},'${containerId}')"
+            style="font-size:9px;padding:3px 7px;border:1px solid #2E7D52;border-radius:6px;background:none;color:#2E7D52;cursor:pointer;font-family:Heebo,sans-serif;white-space:nowrap;flex-shrink:0;">
+            🔎 זיהוי מעמיק
+          </button>
         </div>
       </div>`;
   }).join('');
