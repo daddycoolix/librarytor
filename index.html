@@ -272,7 +272,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
-          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.19</span>
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.20</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -6887,7 +6887,7 @@ async function processImageForBooks(dataUrl, file, lat, lng) {
     const allBooks = [];
     const seen = new Set();
 
-    document.getElementById('found-books').innerHTML = '<div style="padding:16px;text-align:center;color:rgba(255,255,255,0.7);">מנתח חלק 1 מתוך 3...</div>';
+    document.getElementById('found-books').innerHTML = '<div style="padding:16px;text-align:center;color:rgba(255,255,255,0.7);">מנתח חלק 1 מתוך 5...</div>';
     for (let i = 0; i < slices.length; i++) {
       document.getElementById('found-books').innerHTML = `<div style="padding:16px;text-align:center;color:rgba(255,255,255,0.7);">מנתח חלק ${i+1} מתוך ${slices.length}...</div>`;
       const books = await sendToWorker(slices[i]);
@@ -6910,8 +6910,8 @@ async function processImageForBooks(dataUrl, file, lat, lng) {
     document.getElementById('found-books').innerHTML = `<div style="padding:16px;text-align:center;color:rgba(255,255,255,0.7);">מאמת ${allBooks.length} ספרים...</div>`;
     const verified = await verifyWithGoogleBooks(allBooks, null);
 
-    document.getElementById('ai-chip').textContent = `📚 ${allBooks.length} נראו | ✅ ${matched} אומתו`;
     const matched = verified.filter(b => b.matched).length;
+    document.getElementById('ai-chip').textContent = `📚 ${allBooks.length} נראו | ✅ ${matched} אומתו`;
     window._pendingBooks = verified.map(b => ({...b, date: new Date().toLocaleDateString('he-IL'), recent: true}));
     renderBooksList(window._pendingBooks, 'scan', document.getElementById('found-books'));
 
@@ -7592,9 +7592,10 @@ async function analyzeMultipleImages(fileDataList, lat, lng) {
         </div>`;
       // שלח ל-3 מנועים במקביל
       const books = await sendToWorker(compressed.split(',')[1]);
+      console.log('[Librarytor] Image', imgIdx+1, '- got', books.length, 'books from worker');
       for (const b of books) {
         if (!b.title) continue;
-        if (!isHebrew(b.title)) continue;
+        if (!isHebrew(b.title)) { console.log('[Librarytor] Filtered non-Hebrew:', b.title); continue; }
         if (b.author && b.author.trim() && !isHebrew(b.author)) b.author = '';
         const key = b.title.trim().replace(/['"״]/g,'').replace(/\s+/g,' ').toLowerCase();
         if (!seen.has(key)) { seen.add(key); allBooks.push(b); }
@@ -7952,15 +7953,30 @@ async function ocrGemini(base64) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ image: base64 })
     });
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('[Librarytor] Worker error:', response.status, errText);
+      return [];
+    }
     const data = await response.json();
-    return (data.books || []).map(b => {
+    console.log('[Librarytor] Worker response books:', (data.books||[]).length);
+    if (!data.books || !Array.isArray(data.books)) {
+      console.warn('[Librarytor] Worker returned no books array:', JSON.stringify(data).substring(0,200));
+      return [];
+    }
+    const mapped = data.books.map(b => {
       let title = (b.title || '').trim();
       let author = (b.author || '').trim();
       if (!author && title.includes(' / ')) { const p = title.split(' / '); title = p[0].trim(); author = p[1].trim(); }
       if (!author && title.includes(' - ')) { const p = title.split(' - '); title = p[0].trim(); author = p[1].trim(); }
       return { title, author, conf: b.conf || 80, _src: 'gemini' };
     }).filter(b => b.title && b.title.length >= 2);
-  } catch(e) { return []; }
+    console.log('[Librarytor] Books from Gemini:', mapped.length, mapped.slice(0,3).map(b=>b.title));
+    return mapped;
+  } catch(e) {
+    console.error('[Librarytor] ocrGemini exception:', e.message);
+    return [];
+  }
 }
 
 function mergeOCRResults(results) {
