@@ -1,8 +1,14 @@
-const CACHE = 'librarytor-v44.20';
+const CACHE = 'librarytor-v44.22';
 const ASSETS = ['./', '/index.html', '/manifest.json', '/libraries_data.js', '/books_data.js'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+  e.waitUntil(
+    caches.open(CACHE).then(c =>
+      Promise.allSettled(ASSETS.map(url =>
+        c.add(url).catch(err => console.warn('[SW] Failed to cache:', url, err))
+      ))
+    )
+  );
   self.skipWaiting();
 });
 

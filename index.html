@@ -272,7 +272,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
-          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.20</span>
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.22</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -7586,13 +7586,28 @@ async function analyzeMultipleImages(fileDataList, lat, lng) {
     try {
       const compressed = await compressImage(dataUrl, 1200);
       window._lastImageBase64 = compressed.split(',')[1]; // שמור לשימוש בזיהוי מעמיק
-      document.getElementById('recog-status').innerHTML =
-        `<div style="padding:10px;text-align:center;color:var(--text-muted);font-size:13px;" id="ocr-status-msg">
-          🔍 מזהה ספרים... (${imgIdx+1}/${total})
-        </div>`;
-      // שלח ל-3 מנועים במקביל
-      const books = await sendToWorker(compressed.split(',')[1]);
-      console.log('[Librarytor] Image', imgIdx+1, '- got', books.length, 'books from worker');
+
+      // פרוס לחלקים עם חפיפה - כמו processImageForBooks
+      const slices = await sliceImage(compressed, 5);
+      const booksThisImg = [];
+      const seenThisImg = new Set();
+
+      for (let si = 0; si < slices.length; si++) {
+        document.getElementById('recog-status').innerHTML =
+          `<div style="padding:10px;text-align:center;color:var(--text-muted);font-size:13px;" id="ocr-status-msg">
+            🔍 מנתח תמונה ${imgIdx+1}/${total} - חלק ${si+1}/${slices.length}...
+          </div>`;
+        const sliceBooks = await sendToWorker(slices[si]);
+        console.log('[Librarytor] Image', imgIdx+1, 'slice', si+1, '- got', sliceBooks.length, 'books');
+        for (const sb of sliceBooks) {
+          if (!sb.title) continue;
+          const k = sb.title.trim().toLowerCase();
+          if (!seenThisImg.has(k)) { seenThisImg.add(k); booksThisImg.push(sb); }
+        }
+      }
+
+      const books = booksThisImg;
+      console.log('[Librarytor] Image', imgIdx+1, '- total', books.length, 'books from all slices');
       for (const b of books) {
         if (!b.title) continue;
         if (!isHebrew(b.title)) { console.log('[Librarytor] Filtered non-Hebrew:', b.title); continue; }
@@ -7959,6 +7974,7 @@ async function ocrGemini(base64) {
       return [];
     }
     const data = await response.json();
+    console.log('[Librarytor] Worker raw response:', JSON.stringify(data).substring(0, 500));
     console.log('[Librarytor] Worker response books:', (data.books||[]).length);
     if (!data.books || !Array.isArray(data.books)) {
       console.warn('[Librarytor] Worker returned no books array:', JSON.stringify(data).substring(0,200));
