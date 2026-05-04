@@ -1,11 +1,11 @@
-const CACHE = 'librarytor-v44.27';
+const CACHE = 'librarytor-v44.29';
 const ASSETS = ['./', '/index.html', '/manifest.json', '/libraries_data.js', '/books_data.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE).then(c =>
       Promise.allSettled(ASSETS.map(url =>
-        c.add(url).catch(err => console.warn('[SW] Failed to cache:', url, err))
+        c.add(url).catch(err => console.warn('[SW] Failed to cache:', url, err.message))
       ))
     )
   );
@@ -22,6 +22,13 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  // אל תcache בקשות POST או קריאות API חיצוניות
+  if (e.request.method !== 'GET') return;
+  if (e.request.url.includes('workers.dev') ||
+      e.request.url.includes('googleapis.com') ||
+      e.request.url.includes('firebase') ||
+      e.request.url.includes('ocr.space')) return;
+
   e.respondWith(
     fetch(e.request)
       .then(r => {
