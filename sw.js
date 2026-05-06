@@ -1,4 +1,4 @@
-const CACHE = 'librarytor-v44.36';
+const CACHE = 'librarytor-v44.37';
 const ASSETS = ['./', '/index.html', '/manifest.json', '/libraries_data.js', '/books_data.js'];
 
 self.addEventListener('install', e => {
