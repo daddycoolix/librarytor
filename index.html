@@ -272,7 +272,7 @@ video#cam-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cove
       <div class="section-head">
         <span class="section-title">כל הספריות בישראל</span>
         <div style="display:flex;gap:6px;align-items:center;">
-          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.30</span>
+          <span style="font-size:10px;color:white;background:var(--primary);padding:2px 7px;border-radius:8px;font-weight:700;letter-spacing:0.3px;">V44.35</span>
           <span class="section-pill" id="lib-count">440 ספריות</span>
           <span id="sort-btn" onclick="cycleSortMode()" style="font-size:11px;color:var(--primary);background:var(--primary-light);padding:2px 8px;border-radius:10px;cursor:pointer;font-weight:600;">↕ מיון</span>
         </div>
@@ -8260,12 +8260,12 @@ async function searchOpenLibrary(title, author) {
       if (!data.docs || !data.docs.length) continue;
       for (const doc of data.docs) {
         const sim = strSimilarity(title, doc.title || '');
-        if (sim < 0.7) continue;
+        if (sim < 0.9) continue;
         const docAuthor = (doc.author_name && doc.author_name[0]) || '';
         // דרוש התאמת מחבר - אם יש מחבר ידוע, חייב להתאים
         if (author && author.trim() && docAuthor) {
           const authorSim = strSimilarity(author, docAuthor);
-          if (authorSim < 0.4) continue;
+          if (authorSim < 0.9) continue;
         }
         return {
           title: doc.title || title,
@@ -8294,12 +8294,12 @@ async function searchGoogleBooks(title, author) {
     for (const item of data.items) {
       const t = item.volumeInfo.title || '';
       const sim = strSimilarity(title, t);
-      if (sim < 0.7) continue;
+      if (sim < 0.9) continue;
       const gbAuthor = (item.volumeInfo.authors && item.volumeInfo.authors[0]) || '';
       // דרוש התאמת מחבר - אם יש מחבר ידוע, חייב להתאים
       if (author && author.trim() && gbAuthor) {
         const authorSim = strSimilarity(author, gbAuthor);
-        if (authorSim < 0.4) continue;
+        if (authorSim < 0.9) continue;
       }
       return {
         title: t || title,
@@ -8377,12 +8377,23 @@ async function verifyWithGoogleBooks(books, statusElId) {
     batch.forEach((book, idx) => {
       const info = batchResults[idx];
       if (info) {
-        const useInternetTitle = info.title && isHebrew(info.title) && strSimilarity(book.title, info.title) > 0.7;
+        const titleSim = strSimilarity(book.title, info.title || '');
+        const useInternetTitle = info.title && isHebrew(info.title) && titleSim > 0.9;
+
+        // בדוק התאמת מחבר - אם שניהם ידועים, חייבים להתאים ב-90%+
+        let authorMatch = true;
+        if (book.author && book.author.trim() && info.author && info.author.trim()) {
+          authorMatch = strSimilarity(book.author, info.author) >= 0.9;
+        }
+
+        // matched=true רק אם גם כותרת וגם מחבר תואמים ב-90%+
+        const isMatched = titleSim >= 0.9 && authorMatch;
+
         results.push({
           title: useInternetTitle ? info.title : book.title,
           author: (info.author && isHebrew(info.author)) ? info.author : (book.author || ''),
-          matched: true,
-          source: info.source,
+          matched: isMatched,
+          source: isMatched ? info.source : null,
           _origTitle: book.title
         });
       } else {
@@ -8680,11 +8691,11 @@ async function searchNationalLibrary(title, author) {
       const a = doc.author || doc.creator || '';
       if (!t) continue;
       const titleSim = strSimilarity(title, t);
-      if (titleSim < 0.7) continue;
+      if (titleSim < 0.9) continue;
       // דרוש התאמת מחבר אם יש מחבר ידוע
       if (author && author.trim() && a) {
         const authorSim = strSimilarity(author, a);
-        if (authorSim < 0.4) continue;
+        if (authorSim < 0.9) continue;
       }
       return { title: t, author: a || author || '', source: 'ספרייה לאומית', _titleSim: titleSim };
     }
@@ -8705,7 +8716,7 @@ async function searchNationalLibraryByAuthor(author, title) {
     const docs = data.docs || data.results || [];
     for (const doc of docs) {
       const t = doc.title || doc.titleStatement || '';
-      if (t && strSimilarity(title, t) > 0.7) {
+      if (t && strSimilarity(title, t) > 0.9) {
         return { title: t, author: author, source: 'ספרייה לאומית' };
       }
     }
@@ -8727,7 +8738,7 @@ async function searchSimania(title, author) {
     const matches = html.match(/class="book-title[^"]*"[^>]*>([^<]+)</g) || [];
     for (const m of matches) {
       const t = m.replace(/class="[^"]*"[^>]*>/, '').replace(/<[^>]*>/g, '').trim();
-      if (t && isHebrew(t) && strSimilarity(title, t) > 0.7) {
+      if (t && isHebrew(t) && strSimilarity(title, t) > 0.9) {
         // חלץ מחבר אם אפשר
         return { title: t, author: author || '', source: 'סימניה' };
       }
@@ -8745,9 +8756,9 @@ function searchInBooksDB(title, author) {
       for (const book of books) {
         if (!book.title) continue;
         const sim = strSimilarity(title, book.title);
-        if (sim < 0.75) continue;
+        if (sim < 0.9) continue;
         if (author && author.trim() && book.author && book.author.trim()) {
-          if (strSimilarity(author, book.author) < 0.4) continue;
+          if (strSimilarity(author, book.author) < 0.9) continue;
         }
         return { title: book.title, author: book.author || author || '', source: 'מאגר הספריות' };
       }
@@ -8758,9 +8769,9 @@ function searchInBooksDB(title, author) {
       for (const book of books) {
         if (!book.title) continue;
         const sim = strSimilarity(title, book.title);
-        if (sim < 0.75) continue;
+        if (sim < 0.9) continue;
         if (author && author.trim() && book.author && book.author.trim()) {
-          if (strSimilarity(author, book.author) < 0.4) continue;
+          if (strSimilarity(author, book.author) < 0.9) continue;
         }
         return { title: book.title, author: book.author || author || '', source: 'מאגר הספריות' };
       }
@@ -8806,9 +8817,60 @@ function renderBookCard(container, book, idx, containerId) {
 }
 
 // רינדור כל הספרים לרכיב
+function updateSelectAllCheckbox(containerId) {
+  const wrap = document.getElementById(`cb-all-wrap-${containerId}`);
+  const icon = document.getElementById(`cb-all-icon-${containerId}`);
+  if (!wrap || !icon) return;
+  const books = window._pendingBooks || window._recognizedBooks || [];
+  const boxes = books.map((_, i) => document.getElementById(`cb-${containerId}-${i}`)).filter(Boolean);
+  const checked = boxes.filter(b => b.checked).length;
+
+  if (checked === 0) {
+    // ריק - תיבה לבנה, אין V
+    wrap.style.background = '#fff';
+    wrap.style.borderColor = '#555';
+    icon.style.display = 'none';
+  } else if (checked === boxes.length) {
+    // הכל מסומן - תיבה צבועה, V שחור
+    wrap.style.background = 'var(--primary,#4ade80)';
+    wrap.style.borderColor = 'var(--primary,#4ade80)';
+    icon.style.display = 'block';
+    icon.querySelector('polyline').setAttribute('stroke', 'black');
+  } else {
+    // חלקי - תיבה צבועה, V אפור
+    wrap.style.background = 'var(--primary,#4ade80)';
+    wrap.style.borderColor = 'var(--primary,#4ade80)';
+    icon.style.display = 'block';
+    icon.querySelector('polyline').setAttribute('stroke', '#888');
+  }
+}
+
+function toggleSelectAll(containerId) {
+  const books = window._pendingBooks || window._recognizedBooks || [];
+  const boxes = books.map((_, i) => document.getElementById(`cb-${containerId}-${i}`)).filter(Boolean);
+  const anyUnchecked = boxes.some(b => !b.checked);
+  boxes.forEach(b => b.checked = anyUnchecked);
+  updateSelectAllCheckbox(containerId);
+}
+
 function renderBooksList(books, containerId, wrapperEl) {
   window._pendingBooks = books; // sync
-  wrapperEl.innerHTML = books.map((b, i) => {
+
+  // כותרת עם checkbox בחר הכל - custom styled
+  const header = `<div style="display:flex;align-items:center;gap:8px;padding:6px 10px 8px;border-bottom:1px solid var(--border,rgba(255,255,255,0.1));margin-bottom:6px;">
+    <div id="cb-all-wrap-${containerId}" onclick="toggleSelectAll('${containerId}')"
+      style="width:18px;height:18px;border:2px solid #555;border-radius:3px;background:#fff;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;">
+      <svg id="cb-all-icon-${containerId}" viewBox="0 0 12 12" style="display:none;width:10px;height:10px;">
+        <polyline points="1.5,6 5,9.5 10.5,2.5" stroke="black" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <label onclick="toggleSelectAll('${containerId}')" style="font-size:12px;color:var(--text-muted,#aaa);cursor:pointer;user-select:none;">
+      בחר / בטל הכל
+    </label>
+    <span style="font-size:11px;color:var(--text-muted,#888);margin-right:auto;">${books.length} ספרים</span>
+  </div>`;
+
+  wrapperEl.innerHTML = header + books.map((b, i) => {
     const isDeepUnmatched = !b.matched && b._deepTried;
     const borderColor = b.matched ? 'var(--border)' : isDeepUnmatched ? '#f59e0b' : '#ef4444';
     const titleColor = b.matched ? 'inherit' : isDeepUnmatched ? '#92400e' : '#ef4444';
@@ -8825,6 +8887,7 @@ function renderBooksList(books, containerId, wrapperEl) {
       <div id="book-card-${containerId}-${i}" style="padding:8px 10px;background:var(--surface, rgba(255,255,255,0.1));${cardBg}border:1px solid ${borderColor};border-radius:10px;margin-bottom:7px;">
         <div style="display:flex;align-items:center;gap:8px;">
           <input type="checkbox" id="cb-${containerId}-${i}" ${isChecked}
+            onchange="updateSelectAllCheckbox('${containerId}')"
             style="width:18px;height:18px;accent-color:var(--primary, #4ade80);flex-shrink:0;cursor:pointer;">
           <div style="flex:1;min-width:0;">
             <div style="font-size:12px;font-weight:700;color:${titleColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
@@ -8844,6 +8907,8 @@ function renderBooksList(books, containerId, wrapperEl) {
         </div>
       </div>`;
   }).join('');
+  // עדכן מצב checkbox "בחר הכל" לפי מצב הספרים
+  setTimeout(() => updateSelectAllCheckbox(containerId), 0);
 }
 
 async function analyzeImageWithClaude(dataUrl, mediaType, lat, lng) {

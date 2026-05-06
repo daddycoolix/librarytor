@@ -105,7 +105,7 @@ async function runGemini(image, mime, env) {
   }
 
   // נסה כל key × כל model, עם retry על quota
-  const models = ['gemini-2.0-flash', 'gemini-2.5-flash-preview-04-17'];
+  const models = ['gemini-2.0-flash', 'gemini-2.5-flash'];
   let books = [];
   let lastError = null;
   let quotaCount = 0;
