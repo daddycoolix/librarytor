@@ -57,8 +57,8 @@ async function callGemini(model, key, mime, image, prompt) {
           { text: prompt }
         ]}],
         generationConfig: {
-          temperature: 0.1,
-          maxOutputTokens: 2048,
+          temperature: 0,
+          maxOutputTokens: 4096,
           responseMimeType: 'application/json'
         }
       })
@@ -77,24 +77,28 @@ function parseBooks(text) {
     const m = text.match(/"books"\s*:\s*(\[[\s\S]*?\])/);
     if (m) return JSON.parse(m[1]);
   } catch(e) {}
-  return null; // parse failed
+  return null;
 }
 
 async function runGemini(image, mime, env) {
-  const prompt = `אתה מומחה לזיהוי ספרים עבריים. בתמונה זו יש גבות ספרים בספריה.
+  const prompt = `אתה מומחה לזיהוי ספרים עבריים מתמונות. המשימה שלך: לקרוא את הטקסט המדויק מכל גב ספר הנראה בתמונה.
 
-המשימה: זהה את כל הספרים העבריים הנראים בתמונה.
+חוקים מחייבים:
+1. קרא את שם הספר המלא בדיוק כפי שכתוב - אל תקצר, אל תשנה, אל תשמיט מילים
+2. קרא את שם המחבר המלא בדיוק כפי שכתוב על הגב
+3. אם הטקסט חלקי או מכוסה - השלם לפי הידע שלך על הספר
+4. כלול כל ספר עברי שנראה, גם אם הוא חלקי
+5. שמות ספרים עבריים יכולים להיות ארוכים - קרא אותם במלואם
+6. שמות מחברים יכולים להיות עבריים או תעתיק של שמות זרים
 
-הנחיות:
-- זהה ספרים לפי הטקסט הנראה על גב הספר או הכריכה
-- אם הטקסט חלקי או לא ברור - השתמש בידע שלך כדי להשלים את שם הספר
-- כתוב את שם הספר בעברית מלאה ומתוקנת
-- כתוב את שם המחבר אם נראה או ידוע
-- התעלם מספרים באנגלית או בשפות אחרות
-- החזר כמה שיותר ספרים עבריים
+דוגמאות לקריאה נכונה:
+- "אישה אל אחותה" ולא "אישה"
+- "החטופה מאינקנדאר" ולא "החטופה"
+- "מה שנטע אוהבת" ולא "מה שנשמע אוהב"
+- "בחזרה לחיים" ולא "חזרה לחיים"
 
 החזר JSON בלבד:
-{"books":[{"title":"שם הספר","author":"שם המחבר","conf":85}]}
+{"books":[{"title":"שם הספר המלא","author":"שם המחבר המלא","conf":90}]}
 אם אין ספרים עבריים: {"books":[]}`;
 
   const keys = [env.GEMINI_KEY, env.GEMINI_KEY2, env.GEMINI_KEY3].filter(Boolean);
@@ -104,7 +108,6 @@ async function runGemini(image, mime, env) {
     });
   }
 
-  // נסה כל key × כל model, עם retry על quota
   const models = ['gemini-2.0-flash', 'gemini-2.5-flash'];
   let books = [];
   let lastError = null;
@@ -122,18 +125,17 @@ async function runGemini(image, mime, env) {
 
       if (data.promptFeedback?.blockReason) {
         lastError = `Blocked: ${data.promptFeedback.blockReason}`;
-        goto_next_model: break;
+        break;
       }
 
       if (data.error) {
         lastError = data.error.message;
         if (isQuotaError(lastError)) {
           quotaCount++;
-          // אם כל ה-keys עמוסים - המתן קצת לפני model הבא
           if (quotaCount % keys.length === 0) await sleep(800);
           continue;
         }
-        continue; // שגיאה אחרת - נסה key הבא
+        continue;
       }
 
       if (!data.candidates?.length) { lastError = 'Empty candidates'; continue; }
@@ -146,9 +148,8 @@ async function runGemini(image, mime, env) {
       if (parsed === null) { lastError = 'Parse failed'; continue; }
       if (parsed.length > 0) { books = parsed; break; }
 
-      // Gemini ענה אבל החזיר [] - ספרים לא נמצאו בחלק זה
       lastError = `No books (${model})`;
-      break; // אין טעם לנסות keys נוספים על אותו חלק
+      break;
     }
     if (books.length > 0) break;
   }
@@ -168,8 +169,15 @@ async function runLlama(image, mime, env) {
       { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
     );
 
-    const prompt = `You are an expert at reading Hebrew book spines. Identify all Hebrew books visible.
-Return ONLY JSON: {"books":[{"title":"שם בעברית","author":"מחבר","conf":80}]}
+    const prompt = `You are an expert at reading Hebrew book spines. Read the EXACT and COMPLETE text from each book spine visible in the image.
+
+Rules:
+- Read the FULL book title exactly as written - do not shorten or omit words
+- Read the FULL author name exactly as written
+- Include every Hebrew book visible, even partially
+
+Return ONLY JSON:
+{"books":[{"title":"שם הספר המלא","author":"שם המחבר המלא","conf":85}]}
 If no Hebrew books: {"books":[]}`;
 
     const binaryStr = atob(image);
@@ -181,7 +189,7 @@ If no Hebrew books: {"books":[]}`;
         { type: 'image', image: Array.from(bytes) },
         { type: 'text', text: prompt }
       ]}],
-      max_tokens: 1024,
+      max_tokens: 2048,
     });
 
     const text = response?.response || '';
